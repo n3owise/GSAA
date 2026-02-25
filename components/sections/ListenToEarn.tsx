@@ -8,16 +8,22 @@ import { Play, Disc, Wallet, IndianRupee, SkipBack, SkipForward, Pause } from "l
 // The playlist data
 const TRACKS = [
     {
+        title: "Peene de sharab",
+        artist: "GSAA",
+        audioSrc: "https://res.cloudinary.com/dgybminsu/video/upload/v1772026302/Peene_De_Sharab_fdf3en.mp3",
+        artGradient: "from-red-600 via-orange-500 to-yellow-600",
+    },
+    {
         title: "Aaj Phir De Zara Sharab",
         artist: "GSAA",
         audioSrc: "https://res.cloudinary.com/dgybminsu/video/upload/v1772026302/Aaj_Phir_De_Zara_Sharab_jcgksb.mp3",
         artGradient: "from-indigo-600 via-purple-600 to-pink-500",
     },
     {
-        title: "Peene De Sharab",
+        title: "Mohabbat nazar humko aane lagi hai",
         artist: "GSAA",
-        audioSrc: "https://res.cloudinary.com/dgybminsu/video/upload/v1772026302/Peene_De_Sharab_fdf3en.mp3",
-        artGradient: "from-red-600 via-orange-500 to-yellow-600",
+        audioSrc: "https://res.cloudinary.com/dgybminsu/video/upload/v1772026302/Peene_De_Sharab_fdf3en.mp3", // Duplicated audio source for now to avoid breaking the player
+        artGradient: "from-emerald-600 via-teal-500 to-cyan-600",
     }
 ];
 

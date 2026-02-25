@@ -128,7 +128,7 @@ export default function WatchToEarn() {
                         />
 
                         {/* Transparent overlay for cursor tracking */}
-                        <div 
+                        <div
                             className="absolute inset-0 z-[5]"
                             onClick={togglePlay}
                             style={{ pointerEvents: isPlaying ? 'auto' : 'none' }}
@@ -145,14 +145,14 @@ export default function WatchToEarn() {
                                     onClick={togglePlay}
                                 >
                                     {/* Title at the top */}
-                                    <motion.div 
+                                    <motion.div
                                         className="flex flex-col items-center gap-2 mt-4"
                                         initial={{ y: -20, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ delay: 0.2 }}
                                     >
-                                        <h3 className="text-white text-2xl font-bold tracking-tight">
-                                            Click to Play & Start Earning
+                                        <h3 className="text-white text-2xl font-bold tracking-tight text-center px-4">
+                                            Dahej Ka Chakraviyu
                                         </h3>
                                         <p className="text-white/80 text-sm font-medium">
                                             Watch videos and earn rewards instantly
