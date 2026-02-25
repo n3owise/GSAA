@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionContent from "@/components/ui/SectionContent";
-import { Plane, Building2, Bus, Wallet, IndianRupee, MapPin, Calendar, Users, Briefcase, ChevronRight, Globe, Search } from "lucide-react";
+import { Plane, Building2, Bus, Wallet, IndianRupee, MapPin, Calendar, Users, Briefcase, ChevronRight, Globe, Search, ArrowRight } from "lucide-react";
 
 // Flight, Hotel, Bus, and Visa modes
 const travelModes = [
@@ -63,46 +63,27 @@ interface FlyingCoin {
 export default function TravelToEarn() {
     const [activeTab, setActiveTab] = useState(0);
     const [isBooking, setIsBooking] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [walletBalance, setWalletBalance] = useState(12450); // Initial balance
-    const [flyingCoins, setFlyingCoins] = useState<FlyingCoin[]>([]);
-    const [coinCount, setCoinCount] = useState(0);
+    const [view, setView] = useState<"store" | "ticket">("store"); // Manage view states
+    const [ticketData, setTicketData] = useState<typeof travelModes[0] | null>(null);
 
     const activeMode = travelModes[activeTab];
 
     const handleBook = () => {
-        if (isBooking || isSuccess) return;
+        if (isBooking) return;
 
         setIsBooking(true);
 
         // Simulate network booking delay
         setTimeout(() => {
             setIsBooking(false);
-            setIsSuccess(true);
-
-            // Generate coins from the center-right (near the summary box)
-            const newCoins: FlyingCoin[] = Array.from({ length: 12 }).map((_, i) => ({
-                id: coinCount + i,
-                startX: `${65 + Math.random() * 20}%`, // Right side of the screen
-                startY: `${40 + Math.random() * 20}%`, // Middle vertically
-                delay: i * 0.08 // Staggered delay
-            }));
-
-            setCoinCount(prev => prev + 12);
-            setFlyingCoins(newCoins);
-
-            // Add the cashback to the wallet exactly when the first coin lands
-            setTimeout(() => {
-                setWalletBalance((prev) => prev + activeMode.cashback);
-            }, 800);
-
-            // Reset UI after 4 seconds
-            setTimeout(() => {
-                setIsSuccess(false);
-                setFlyingCoins([]);
-            }, 4000);
-
+            setTicketData(activeMode);
+            setView("ticket"); // Switch to ticket view
         }, 1500); // 1.5s of "Processing..."
+    };
+
+    const handleBookAgain = () => {
+        setView("store");
+        setTicketData(null);
     };
 
     return (
@@ -157,16 +138,11 @@ export default function TravelToEarn() {
                                 <span className="text-[9px] text-white/50 font-mono tracking-wider w-full truncate text-center">travel.gsaa.global</span>
                             </div>
 
-                            {/* Wallet Display (Top Right of Browser) */}
-                            <motion.div
-                                key={walletBalance}
-                                initial={{ scale: 1.1, backgroundColor: "rgba(234, 179, 8, 0.2)" }}
-                                animate={{ scale: 1, backgroundColor: "transparent" }}
-                                className="flex items-center gap-1.5 px-2 py-1 bg-white/5 rounded pl-1 shrink-0"
-                            >
-                                <Wallet size={12} className="text-yellow-400" />
-                                <span className="text-[10px] font-bold text-white tracking-widest leading-none mt-0.5">₹{walletBalance.toLocaleString()}</span>
-                            </motion.div>
+                            {/* Wallet Display (Static for design) */}
+                            <div className="flex items-center gap-1.5 px-2 py-1 bg-white/5 rounded pl-1 shrink-0">
+                                <Wallet size={12} className="text-white/40" />
+                                <span className="text-[10px] font-bold text-white/40 tracking-widest leading-none mt-0.5">WALLET</span>
+                            </div>
                         </div>
 
                         {/* Website Canvas Area */}
@@ -195,7 +171,7 @@ export default function TravelToEarn() {
                                     {travelModes.map((mode, idx) => (
                                         <button
                                             key={mode.id}
-                                            onClick={() => { if (!isBooking && !isSuccess) setActiveTab(idx); }}
+                                            onClick={() => { if (!isBooking) setActiveTab(idx); }}
                                             className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-2.5 rounded-lg transition-all duration-300 ${activeTab === idx
                                                 ? `bg-gradient-to-r ${mode.bg} border border-${mode.color.replace('text-', '')}/30 shadow-lg`
                                                 : "hover:bg-white/5 text-white/50 border border-transparent"
@@ -284,8 +260,8 @@ export default function TravelToEarn() {
                                                 {/* Action Button */}
                                                 <button
                                                     onClick={handleBook}
-                                                    disabled={isBooking || isSuccess}
-                                                    className={`w-full mt-4 py-3.5 rounded-lg text-sm font-bold flex flex-col items-center justify-center transition-all duration-300 relative overflow-hidden group ${isBooking || isSuccess
+                                                    disabled={isBooking}
+                                                    className={`w-full mt-4 py-3.5 rounded-lg text-sm font-bold flex flex-col items-center justify-center transition-all duration-300 relative overflow-hidden group ${isBooking
                                                         ? "bg-white/10 text-white cursor-wait"
                                                         : "bg-white text-black hover:bg-gray-200 hover:scale-[1.02] shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
                                                         }`}
@@ -306,16 +282,6 @@ export default function TravelToEarn() {
                                                                 />
                                                                 Securely Processing...
                                                             </motion.div>
-                                                        ) : isSuccess ? (
-                                                            <motion.div
-                                                                key="success"
-                                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                                animate={{ opacity: 1, scale: 1 }}
-                                                                exit={{ opacity: 0 }}
-                                                                className="flex items-center gap-2 text-yellow-400"
-                                                            >
-                                                                Booking Complete!
-                                                            </motion.div>
                                                         ) : (
                                                             <motion.div
                                                                 key="idle"
@@ -328,50 +294,97 @@ export default function TravelToEarn() {
                                                             </motion.div>
                                                         )}
                                                     </AnimatePresence>
-
-                                                    {/* Success Loading Bar */}
-                                                    {isSuccess && (
-                                                        <motion.div
-                                                            initial={{ width: "0%" }}
-                                                            animate={{ width: "100%" }}
-                                                            transition={{ duration: 4, ease: "linear" }}
-                                                            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-yellow-400 to-amber-500"
-                                                        />
-                                                    )}
                                                 </button>
                                             </motion.div>
                                         </AnimatePresence>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Animated Flying Cashback Coins */}
-                        {flyingCoins.map(coin => (
-                            <motion.div
-                                key={coin.id}
-                                initial={{
-                                    y: coin.startY,
-                                    x: coin.startX,
-                                    scale: 0.5,
-                                    opacity: 0,
-                                }}
-                                animate={{
-                                    y: [coin.startY, "10%", "5%"], // Arc upwards to the wallet in the browser top bar
-                                    x: [coin.startX, "80%", "85%"], // Move towards top right
-                                    scale: [0.5, 1.2, 0.4], // Pop large, then shrink
-                                    opacity: [0, 1, 0] // Fade in and out
-                                }}
-                                transition={{
-                                    duration: 0.9,
-                                    delay: coin.delay,
-                                    ease: "easeInOut"
-                                }}
-                                className="absolute top-0 left-0 w-8 h-8 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 border-2 border-yellow-100 flex items-center justify-center shadow-[0_0_20px_rgba(250,204,21,0.9)] z-50 pointer-events-none"
-                            >
-                                <IndianRupee size={18} strokeWidth={3} className="text-yellow-800" />
-                            </motion.div>
-                        ))}
+                            {/* Ticket Overlay View */}
+                            <AnimatePresence>
+                                {view === "ticket" && ticketData && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 50 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 20 }}
+                                        transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
+                                        className="absolute inset-0 z-50 bg-[#050505] p-5 flex flex-col items-center justify-center"
+                                    >
+                                        {/* Ticket Core */}
+                                        <div className="w-full max-w-[320px] bg-white text-black rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] mx-auto relative group">
+
+                                            {/* Ticket Header */}
+                                            <div className={`p-5 text-white bg-gradient-to-br ${ticketData.bg.replace('/20', '/80').replace('/20', '/90')} relative overflow-hidden`}>
+                                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                                                <div className="relative z-10 flex justify-between items-start">
+                                                    <div>
+                                                        <p className="text-[10px] uppercase font-bold tracking-widest text-white/80 mb-1">E-Ticket Confirmed</p>
+                                                        <h3 className="text-2xl font-black">{ticketData.label.replace('s', '')}</h3>
+                                                    </div>
+                                                    <div className="p-2 bg-white/20 backdrop-blur-md rounded-xl">
+                                                        <ticketData.icon size={24} className="text-white" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Ticket Body */}
+                                            <div className="p-6 pb-8 bg-white relative">
+                                                {/* Tear Drop cutouts */}
+                                                <div className="absolute top-0 left-[-10px] w-5 h-5 bg-[#050505] rounded-full -translate-y-1/2" />
+                                                <div className="absolute top-0 right-[-10px] w-5 h-5 bg-[#050505] rounded-full -translate-y-1/2" />
+                                                <div className="absolute top-0 left-4 right-4 h-px border-t-2 border-dashed border-gray-300 -translate-y-[1px]" />
+
+                                                <div className="space-y-4">
+                                                    <div>
+                                                        <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-0.5">{ticketData.placeholderObj}</p>
+                                                        <p className="text-base font-bold text-gray-900">{ticketData.target}</p>
+                                                    </div>
+
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div>
+                                                            <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-0.5">Date</p>
+                                                            <p className="text-sm font-bold text-gray-900">Next Friday</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-0.5">Time</p>
+                                                            <p className="text-sm font-bold text-gray-900">09:00 AM</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center bg-gray-50 rounded-lg p-3">
+                                                        <div>
+                                                            <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-0.5">Paid Amount</p>
+                                                            <p className="text-lg font-black text-gray-900">₹{ticketData.price.toLocaleString()}</p>
+                                                        </div>
+                                                        <div className="text-right">
+                                                            <p className="text-[10px] text-yellow-600 uppercase tracking-widest font-bold mb-0.5">Cashback Earned</p>
+                                                            <p className="text-base font-black text-yellow-500 bg-yellow-100 px-2 rounded">
+                                                                +₹{ticketData.cashback}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Barcode Mock */}
+                                            <div className="bg-gray-100 p-4 flex flex-col items-center justify-center border-t border-gray-200">
+                                                <div className="w-full max-w-[200px] h-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJz48cGF0aCBkPSdNMCAwaDR2MTAwSDB6bTYgMGgydjEwMEg2em00IDBoNHYxMDBIMTB6bTYgMGgydjEwMEgxNnptNCAwaDN2MTAwSDIwem01IDBoMnYxMDBIMjV6bTMgMGg0djEwMEgyOHptNiAwaDJ2MTAwSDM0em00IDBoNHYxMDBIMzh6bTYgMGgydjEwMEg0NHptNCAwaDN2MTAwSDQ4em01IDBoMnYxMDBINTN6bTMgMGg0djEwMEg1NnptNiAwaDJ2MTAwSDYyem00IDBoNHYxMDBINjZ6bTYgMGgydjEwMEg3MnptNCAwaDN2MTAwSDc2em01IDBoMnYxMDBIODE6Jz48L3BhdGg+PC9zdmc+')] bg-repeat-x opacity-60 mix-blend-multiply" />
+                                                <p className="text-[8px] tracking-[0.3em] text-gray-400 mt-2">GSAA-TRVL-{Math.floor(Math.random() * 900000) + 100000}</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Book Again Button */}
+                                        <button
+                                            onClick={handleBookAgain}
+                                            className="mt-6 px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-xs font-bold text-white transition-colors flex items-center gap-2"
+                                        >
+                                            Book Another <ArrowRight size={14} />
+                                        </button>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </motion.div>
 
                 </div>
