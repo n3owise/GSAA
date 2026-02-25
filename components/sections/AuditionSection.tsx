@@ -98,13 +98,10 @@ export default function AuditionSection() {
                         <div className="absolute top-12 left-0 w-full h-60 bg-neutral-900 border-t-4 border-white rounded-b-lg shadow-2xl flex flex-col p-6 text-white font-mono">
                             <div className="flex justify-between items-end border-b-2 border-white/20 pb-4 mb-4">
                                 <div>
-                                    <p className="text-xs text-white/40 uppercase mb-1">Production</p>
-                                    <h3 className="text-xl font-bold tracking-widest">GSAA ORIGINAL</h3>
+                                    <p className="text-xs text-white/40 uppercase mb-1">Production House</p>
+                                    <h3 className="text-xl font-bold tracking-widest">GSAA Global Pvt. Ltd.</h3>
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-xs text-white/40 uppercase mb-1">Director</p>
-                                    <h3 className="text-lg font-bold">N3OWISE</h3>
-                                </div>
+
                             </div>
 
                             <div className="grid grid-cols-3 gap-4 text-center">
