@@ -113,10 +113,10 @@ export default function TravelToEarn() {
                 <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px]" />
             </div>
 
-            <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 xl:grid-cols-[1fr_1.2fr] gap-16 lg:gap-20 items-center relative z-10 w-full">
+            <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10 w-full">
 
                 {/* Content Side (Left) */}
-                <div className="order-2 xl:order-1 relative z-20">
+                <div className="order-2 lg:order-1 relative z-20">
                     <SectionContent
                         badge="TRAVEL REWARDS"
                         title="Journey Further, Earn Faster"
@@ -131,12 +131,12 @@ export default function TravelToEarn() {
                     />
                 </div>
 
-                {/* Visual Side (Right) - Desktop/Monitor Website Mockup */}
-                <div className="relative order-1 xl:order-2 flex justify-center perspective-1000 w-full h-full">
+                {/* Visual Side (Right) - Web Widget Mockup */}
+                <div className="relative order-1 lg:order-2 flex justify-center perspective-1000 w-full">
 
-                    {/* The Monitor / Browser Wrapper */}
+                    {/* The Mini Browser Wrapper */}
                     <motion.div
-                        className="relative w-[120%] lg:w-[110%] max-w-[800px] aspect-[16/10] bg-[#0c0c0e] rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.2)] border border-[#333] overflow-hidden flex flex-col"
+                        className="relative w-full max-w-[480px] aspect-[4/5] bg-[#0c0c0e] rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.2)] border border-[#333] overflow-hidden flex flex-col"
                         initial={{ opacity: 0, x: 50, rotateY: -10 }}
                         whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                         viewport={{ once: true }}
@@ -152,9 +152,9 @@ export default function TravelToEarn() {
                             </div>
 
                             {/* URL Bar */}
-                            <div className="flex-1 max-w-sm h-6 bg-black/40 rounded-md border border-white/5 flex items-center px-3 mx-auto">
-                                <Globe size={12} className="text-white/40 mr-2" />
-                                <span className="text-[10px] text-white/50 font-mono tracking-wider w-full text-center pr-4">travel.gsaa.global</span>
+                            <div className="flex-1 max-w-[200px] h-6 bg-black/40 rounded-md border border-white/5 flex items-center px-3 mx-auto">
+                                <Globe size={10} className="text-white/40 mr-2 shrink-0" />
+                                <span className="text-[9px] text-white/50 font-mono tracking-wider w-full truncate text-center">travel.gsaa.global</span>
                             </div>
 
                             {/* Wallet Display (Top Right of Browser) */}
@@ -162,10 +162,10 @@ export default function TravelToEarn() {
                                 key={walletBalance}
                                 initial={{ scale: 1.1, backgroundColor: "rgba(234, 179, 8, 0.2)" }}
                                 animate={{ scale: 1, backgroundColor: "transparent" }}
-                                className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded pl-1"
+                                className="flex items-center gap-1.5 px-2 py-1 bg-white/5 rounded pl-1 shrink-0"
                             >
                                 <Wallet size={12} className="text-yellow-400" />
-                                <span className="text-[11px] font-bold text-white tracking-widest">₹{walletBalance.toLocaleString()}</span>
+                                <span className="text-[10px] font-bold text-white tracking-widest leading-none mt-0.5">₹{walletBalance.toLocaleString()}</span>
                             </motion.div>
                         </div>
 
@@ -173,44 +173,44 @@ export default function TravelToEarn() {
                         <div className="flex-1 bg-[#050505] relative flex flex-col z-10">
 
                             {/* Website Navbar (Internal) */}
-                            <div className="h-14 border-b border-white/5 flex items-center px-8 justify-between bg-white/[0.02] shrink-0">
-                                <h2 className="text-lg font-black text-white tracking-widest flex items-center gap-2">
-                                    <Globe className="text-blue-500" size={20} />
+                            <div className="h-12 border-b border-white/5 flex items-center px-4 justify-between bg-white/[0.02] shrink-0">
+                                <h2 className="text-sm font-black text-white tracking-widest flex items-center gap-2">
+                                    <Globe className="text-blue-500" size={16} />
                                     GSAA <span className="text-blue-500 font-light">TRAVEL</span>
                                 </h2>
 
                                 {/* Animated Instruction */}
                                 <div className="hidden sm:block">
-                                    <span className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold px-4 py-1.5 rounded-full animate-pulse">
-                                        👇 Tap a tab to explore
+                                    <span className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[9px] font-bold px-3 py-1 rounded-full animate-pulse uppercase tracking-wider">
+                                        👇 Tap a tab
                                     </span>
                                 </div>
                             </div>
 
                             {/* Main Content Layout */}
-                            <div className="flex-1 flex flex-col p-6 sm:p-8 gap-6 relative">
+                            <div className="flex-1 flex flex-col p-4 sm:p-5 gap-4 relative overflow-hidden">
 
                                 {/* Top Navigation Tabs */}
-                                <div className="flex items-center gap-3 bg-white/5 p-1.5 rounded-xl border border-white/5 w-fit shrink-0 backdrop-blur-sm">
+                                <div className="flex items-center gap-1.5 bg-white/5 p-1 rounded-xl border border-white/5 w-full shrink-0 backdrop-blur-sm">
                                     {travelModes.map((mode, idx) => (
                                         <button
                                             key={mode.id}
                                             onClick={() => { if (!isBooking && !isSuccess) setActiveTab(idx); }}
-                                            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg transition-all duration-300 ${activeTab === idx
+                                            className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-2.5 rounded-lg transition-all duration-300 ${activeTab === idx
                                                 ? `bg-gradient-to-r ${mode.bg} border border-${mode.color.replace('text-', '')}/30 shadow-lg`
                                                 : "hover:bg-white/5 text-white/50 border border-transparent"
                                                 }`}
                                         >
-                                            <mode.icon size={16} className={activeTab === idx ? mode.color : "opacity-70"} />
-                                            <span className={`text-xs font-bold uppercase tracking-wider ${activeTab === idx ? "text-white" : ""}`}>{mode.label}</span>
+                                            <mode.icon size={14} className={activeTab === idx ? mode.color : "opacity-70"} />
+                                            <span className={`text-[10px] font-bold uppercase tracking-wider ${activeTab === idx ? "text-white" : ""}`}>{mode.label}</span>
                                         </button>
                                     ))}
                                 </div>
 
-                                {/* Booking Interface Split (Left: Search Inputs | Right: Price/Action) */}
-                                <div className="grid grid-cols-1 sm:grid-cols-[1.5fr_1fr] gap-6 flex-1 bg-white/[0.01] border border-white/5 rounded-2xl p-6 shadow-inner relative z-20">
+                                {/* Booking Interface (Stacked layout) */}
+                                <div className="flex flex-col gap-4 flex-1 bg-white/[0.01] border border-white/5 rounded-2xl p-4 shadow-inner relative z-20">
 
-                                    {/* Left Side: Inputs */}
+                                    {/* Top Half: Inputs */}
                                     <AnimatePresence mode="popLayout">
                                         <motion.div
                                             key={activeTab}
@@ -218,128 +218,130 @@ export default function TravelToEarn() {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, scale: 0.98 }}
                                             transition={{ duration: 0.4 }}
-                                            className="flex flex-col gap-4"
+                                            className="flex flex-col gap-3"
                                         >
-                                            <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4 group hover:bg-white/10 transition-colors">
-                                                <div className={`p-2 rounded-lg bg-gradient-to-br ${activeMode.bg}`}>
-                                                    <MapPin size={20} className={activeMode.color} />
+                                            <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-3 group hover:bg-white/10 transition-colors">
+                                                <div className={`p-2 rounded-lg bg-gradient-to-br ${activeMode.bg} shrink-0`}>
+                                                    <MapPin size={16} className={activeMode.color} />
                                                 </div>
-                                                <div className="flex-1">
-                                                    <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-1">{activeMode.placeholderObj}</p>
-                                                    <p className="text-lg font-medium text-white">{activeMode.target}</p>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-[9px] text-white/40 uppercase tracking-widest font-bold mb-0.5">{activeMode.placeholderObj}</p>
+                                                    <p className="text-[13px] font-medium text-white truncate">{activeMode.target}</p>
                                                 </div>
-                                                <Search size={16} className="text-white/20 group-hover:text-white/50" />
+                                                <Search size={14} className="text-white/20 group-hover:text-white/50 shrink-0" />
                                             </div>
 
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4 hover:bg-white/10 transition-colors">
-                                                    <div className="p-2 rounded-lg bg-white/5">
-                                                        <Calendar size={18} className="text-white/60" />
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-2.5 hover:bg-white/10 transition-colors">
+                                                    <div className="p-1.5 rounded-lg bg-white/5 shrink-0">
+                                                        <Calendar size={14} className="text-white/60" />
                                                     </div>
-                                                    <div>
-                                                        <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-1">Departure</p>
-                                                        <p className="text-sm font-medium text-white">Next Friday</p>
+                                                    <div className="min-w-0">
+                                                        <p className="text-[8px] text-white/40 uppercase tracking-widest font-bold mb-0.5">Departure</p>
+                                                        <p className="text-[11px] font-medium text-white truncate">Next Friday</p>
                                                     </div>
                                                 </div>
-                                                <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4 hover:bg-white/10 transition-colors">
-                                                    <div className="p-2 rounded-lg bg-white/5">
-                                                        <Users size={18} className="text-white/60" />
+                                                <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-2.5 hover:bg-white/10 transition-colors">
+                                                    <div className="p-1.5 rounded-lg bg-white/5 shrink-0">
+                                                        <Users size={14} className="text-white/60" />
                                                     </div>
-                                                    <div>
-                                                        <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-1">Travelers</p>
-                                                        <p className="text-sm font-medium text-white">2 Adults</p>
+                                                    <div className="min-w-0">
+                                                        <p className="text-[8px] text-white/40 uppercase tracking-widest font-bold mb-0.5">Travelers</p>
+                                                        <p className="text-[11px] font-medium text-white truncate">2 Adults</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </motion.div>
                                     </AnimatePresence>
 
-                                    {/* Right Side: Price Summary & Action */}
-                                    <AnimatePresence mode="popLayout">
-                                        <motion.div
-                                            key={`summary-${activeTab}`}
-                                            initial={{ opacity: 0, x: 20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: -10 }}
-                                            className="bg-[#0c0c0e] border border-white/10 rounded-xl p-6 flex flex-col justify-between shadow-2xl relative"
-                                        >
-                                            <div>
-                                                <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                                                    <activeMode.icon size={16} className={activeMode.color} /> Booking Summary
-                                                </h3>
-                                                <div className="flex justify-between items-end mb-4 pb-4 border-b border-white/5">
-                                                    <p className="text-[11px] text-white/50 uppercase tracking-widest">Total Price</p>
-                                                    <p className="text-2xl font-bold text-white leading-none">₹{activeMode.price.toLocaleString()}</p>
-                                                </div>
-
-                                                <div className="bg-gradient-to-r from-yellow-500/10 to-amber-500/5 border border-yellow-500/20 rounded-lg p-3 flex justify-between items-center">
-                                                    <p className="text-[10px] font-bold text-yellow-500/80 uppercase tracking-wider">Earn Cashback</p>
-                                                    <p className="text-lg font-black text-yellow-400 flex items-center gap-1">
-                                                        +₹{activeMode.cashback}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            {/* Action Button */}
-                                            <button
-                                                onClick={handleBook}
-                                                disabled={isBooking || isSuccess}
-                                                className={`w-full mt-6 py-4 rounded-lg text-sm font-bold flex flex-col items-center justify-center transition-all duration-300 relative overflow-hidden group ${isBooking || isSuccess
-                                                    ? "bg-white/10 text-white cursor-wait"
-                                                    : "bg-white text-black hover:bg-gray-200 hover:scale-[1.02] shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
-                                                    }`}
+                                    {/* Bottom Half: Price Summary & Action */}
+                                    <div className="flex-1 flex flex-col justify-end relative">
+                                        <AnimatePresence mode="popLayout">
+                                            <motion.div
+                                                key={`summary-${activeTab}`}
+                                                initial={{ opacity: 0, x: 20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, x: -10 }}
+                                                className="bg-[#0c0c0e] border border-white/10 rounded-xl p-4 shadow-2xl relative"
                                             >
-                                                <AnimatePresence mode="wait">
-                                                    {isBooking ? (
-                                                        <motion.div
-                                                            key="processing"
-                                                            initial={{ opacity: 0 }}
-                                                            animate={{ opacity: 1 }}
-                                                            exit={{ opacity: 0 }}
-                                                            className="flex items-center gap-2"
-                                                        >
-                                                            <motion.div
-                                                                animate={{ rotate: 360 }}
-                                                                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                                                className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
-                                                            />
-                                                            Securely Processing...
-                                                        </motion.div>
-                                                    ) : isSuccess ? (
-                                                        <motion.div
-                                                            key="success"
-                                                            initial={{ opacity: 0, scale: 0.8 }}
-                                                            animate={{ opacity: 1, scale: 1 }}
-                                                            exit={{ opacity: 0 }}
-                                                            className="flex items-center gap-2 text-yellow-400"
-                                                        >
-                                                            Booking Complete!
-                                                        </motion.div>
-                                                    ) : (
-                                                        <motion.div
-                                                            key="idle"
-                                                            initial={{ opacity: 0 }}
-                                                            animate={{ opacity: 1 }}
-                                                            exit={{ opacity: 0 }}
-                                                            className="flex items-center justify-center gap-2"
-                                                        >
-                                                            Confirm & Pay <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                                        </motion.div>
-                                                    )}
-                                                </AnimatePresence>
+                                                <div>
+                                                    <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                                                        <activeMode.icon size={16} className={activeMode.color} /> Booking Summary
+                                                    </h3>
+                                                    <div className="flex justify-between items-end mb-3 pb-3 border-b border-white/5">
+                                                        <p className="text-[10px] text-white/50 uppercase tracking-widest leading-none">Total Price</p>
+                                                        <p className="text-xl font-bold text-white leading-none">₹{activeMode.price.toLocaleString()}</p>
+                                                    </div>
 
-                                                {/* Success Loading Bar */}
-                                                {isSuccess && (
-                                                    <motion.div
-                                                        initial={{ width: "0%" }}
-                                                        animate={{ width: "100%" }}
-                                                        transition={{ duration: 4, ease: "linear" }}
-                                                        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-yellow-400 to-amber-500"
-                                                    />
-                                                )}
-                                            </button>
-                                        </motion.div>
-                                    </AnimatePresence>
+                                                    <div className="bg-gradient-to-r from-yellow-500/10 to-amber-500/5 border border-yellow-500/20 rounded-lg p-2.5 flex justify-between items-center">
+                                                        <p className="text-[9px] font-bold text-yellow-500/80 uppercase tracking-wider leading-none">Earn Cashback</p>
+                                                        <p className="text-base font-black text-yellow-400 flex items-center gap-1 leading-none">
+                                                            +₹{activeMode.cashback}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Action Button */}
+                                                <button
+                                                    onClick={handleBook}
+                                                    disabled={isBooking || isSuccess}
+                                                    className={`w-full mt-4 py-3.5 rounded-lg text-sm font-bold flex flex-col items-center justify-center transition-all duration-300 relative overflow-hidden group ${isBooking || isSuccess
+                                                        ? "bg-white/10 text-white cursor-wait"
+                                                        : "bg-white text-black hover:bg-gray-200 hover:scale-[1.02] shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
+                                                        }`}
+                                                >
+                                                    <AnimatePresence mode="wait">
+                                                        {isBooking ? (
+                                                            <motion.div
+                                                                key="processing"
+                                                                initial={{ opacity: 0 }}
+                                                                animate={{ opacity: 1 }}
+                                                                exit={{ opacity: 0 }}
+                                                                className="flex items-center gap-2"
+                                                            >
+                                                                <motion.div
+                                                                    animate={{ rotate: 360 }}
+                                                                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                                                    className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                                                                />
+                                                                Securely Processing...
+                                                            </motion.div>
+                                                        ) : isSuccess ? (
+                                                            <motion.div
+                                                                key="success"
+                                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                                animate={{ opacity: 1, scale: 1 }}
+                                                                exit={{ opacity: 0 }}
+                                                                className="flex items-center gap-2 text-yellow-400"
+                                                            >
+                                                                Booking Complete!
+                                                            </motion.div>
+                                                        ) : (
+                                                            <motion.div
+                                                                key="idle"
+                                                                initial={{ opacity: 0 }}
+                                                                animate={{ opacity: 1 }}
+                                                                exit={{ opacity: 0 }}
+                                                                className="flex items-center justify-center gap-2"
+                                                            >
+                                                                Confirm & Pay <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+
+                                                    {/* Success Loading Bar */}
+                                                    {isSuccess && (
+                                                        <motion.div
+                                                            initial={{ width: "0%" }}
+                                                            animate={{ width: "100%" }}
+                                                            transition={{ duration: 4, ease: "linear" }}
+                                                            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-yellow-400 to-amber-500"
+                                                        />
+                                                    )}
+                                                </button>
+                                            </motion.div>
+                                        </AnimatePresence>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -356,8 +358,8 @@ export default function TravelToEarn() {
                                 }}
                                 animate={{
                                     y: [coin.startY, "10%", "5%"], // Arc upwards to the wallet in the browser top bar
-                                    x: [coin.startX, "85%", "95%"], // Move towards top right
-                                    scale: [0.5, 1.5, 0.3], // Pop large, then shrink
+                                    x: [coin.startX, "80%", "85%"], // Move towards top right
+                                    scale: [0.5, 1.2, 0.4], // Pop large, then shrink
                                     opacity: [0, 1, 0] // Fade in and out
                                 }}
                                 transition={{
@@ -365,9 +367,9 @@ export default function TravelToEarn() {
                                     delay: coin.delay,
                                     ease: "easeInOut"
                                 }}
-                                className="absolute top-0 left-0 w-10 h-10 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 border-2 border-yellow-100 flex items-center justify-center shadow-[0_0_30px_rgba(250,204,21,0.9)] z-50 pointer-events-none"
+                                className="absolute top-0 left-0 w-8 h-8 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 border-2 border-yellow-100 flex items-center justify-center shadow-[0_0_20px_rgba(250,204,21,0.9)] z-50 pointer-events-none"
                             >
-                                <IndianRupee size={24} strokeWidth={3} className="text-yellow-800" />
+                                <IndianRupee size={18} strokeWidth={3} className="text-yellow-800" />
                             </motion.div>
                         ))}
                     </motion.div>
