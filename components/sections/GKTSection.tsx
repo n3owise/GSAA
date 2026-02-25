@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Hexagon, Zap, Layers, Box } from "lucide-react"; // Using Hexagon for Polygon reference
+import Image from "next/image";
 
 export default function GKTSection() {
     const [nodes, setNodes] = useState<{ top: number; left: number; size: number }[]>([]);
@@ -67,24 +68,35 @@ export default function GKTSection() {
                         initial={{ rotateY: 0 }}
                         animate={{ rotateY: 360 }}
                         transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                        className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-gray-300 via-white to-gray-400 shadow-[0_0_60px_rgba(255,255,255,0.15)] flex items-center justify-center relative transform-style-3d border-4 border-white/10"
+                        className="w-48 h-48 md:w-64 md:h-64 rounded-full flex items-center justify-center relative transform-style-3d shadow-[0_0_60px_rgba(255,255,255,0.15)]"
                     >
-                        {/* Inner Ring */}
-                        <div className="absolute inset-2 rounded-full border border-gray-400/50" />
-                        <div className="absolute inset-4 rounded-full border-2 border-dashed border-gray-400/30" />
-
-                        {/* Coin Face */}
-                        <div className="flex flex-col items-center justify-center backface-visible">
-                            <span className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-gray-800 to-black drop-shadow-sm tracking-tighter">
-                                GKT
-                            </span>
-                            <span className="text-[10px] md:text-xs font-bold text-gray-600 tracking-[0.2em] mt-2">
-                                KOMBAT TOKEN
-                            </span>
+                        {/* Front Face */}
+                        <div className="absolute inset-0 backface-hidden">
+                            <Image
+                                src="/gkt-logo.png"
+                                alt="GKT Token logo"
+                                fill
+                                className="object-cover drop-shadow-2xl"
+                                priority
+                            />
                         </div>
 
+                        {/* Back Face */}
+                        <div className="absolute inset-0 backface-hidden" style={{ transform: "rotateY(180deg)" }}>
+                            <Image
+                                src="/gkt-logo.png"
+                                alt="GKT Token logo back"
+                                fill
+                                className="object-cover drop-shadow-2xl brightness-90"
+                                priority
+                            />
+                        </div>
+
+                        {/* Edge/Thickness Simulation */}
+                        <div className="absolute inset-0 rounded-full border-[10px] border-black/10 mix-blend-overlay pointer-events-none" />
+
                         {/* Shine Effect */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-0 animate-shine pointer-events-none" />
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-30 animate-shine pointer-events-none mix-blend-overlay" />
                     </motion.div>
 
                     {/* Shadow underneath */}
