@@ -246,13 +246,13 @@ export default function TravelToEarn() {
                                                     </h3>
                                                     <div className="flex justify-between items-end mb-3 pb-3 border-b border-white/5">
                                                         <p className="text-[10px] text-white/50 uppercase tracking-widest leading-none">Total Price</p>
-                                                        <p className="text-xl font-bold text-white leading-none">₹{activeMode.price.toLocaleString()}</p>
+                                                        <p className="text-xl font-bold text-white leading-none">XXXX₹</p>
                                                     </div>
 
                                                     <div className="bg-gradient-to-r from-yellow-500/10 to-amber-500/5 border border-yellow-500/20 rounded-lg p-2.5 flex justify-between items-center">
                                                         <p className="text-[9px] font-bold text-yellow-500/80 uppercase tracking-wider leading-none">Earn Cashback</p>
                                                         <p className="text-base font-black text-yellow-400 flex items-center gap-1 leading-none">
-                                                            +₹{activeMode.cashback}
+                                                            +XXXX₹
                                                         </p>
                                                     </div>
                                                 </div>
@@ -355,12 +355,12 @@ export default function TravelToEarn() {
                                                     <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center bg-gray-50 rounded-lg p-3">
                                                         <div>
                                                             <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-0.5">Paid Amount</p>
-                                                            <p className="text-lg font-black text-gray-900">₹{ticketData.price.toLocaleString()}</p>
+                                                            <p className="text-lg font-black text-gray-900">XXXX₹</p>
                                                         </div>
                                                         <div className="text-right">
                                                             <p className="text-[10px] text-yellow-600 uppercase tracking-widest font-bold mb-0.5">Cashback Earned</p>
                                                             <p className="text-base font-black text-yellow-500 bg-yellow-100 px-2 rounded">
-                                                                +₹{ticketData.cashback}
+                                                                +XXXX₹
                                                             </p>
                                                         </div>
                                                     </div>
