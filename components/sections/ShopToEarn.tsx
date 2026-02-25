@@ -10,12 +10,6 @@ const storeItems = [
     { id: 2, name: "Smartphone X", icon: Smartphone, price: 45000, cashbackRate: 0.02, bg: "from-purple-500/20 to-pink-500/20", color: "text-pink-400" },
     { id: 3, name: "Luxury Perfume", icon: Droplet, price: 3500, cashbackRate: 0.10, bg: "from-amber-500/20 to-orange-500/20", color: "text-amber-400" },
     { id: 4, name: "Smartwatch Pro", icon: Watch, price: 5000, cashbackRate: 0.05, bg: "from-emerald-500/20 to-teal-500/20", color: "text-emerald-400" },
-    { id: 5, name: "Pro Headphones", icon: Headphones, price: 8000, cashbackRate: 0.05, bg: "from-red-500/20 to-rose-500/20", color: "text-rose-400" },
-    { id: 6, name: "Designer Shades", icon: Glasses, price: 2000, cashbackRate: 0.15, bg: "from-indigo-500/20 to-blue-500/20", color: "text-indigo-400" },
-    { id: 7, name: "Gaming Console", icon: Smartphone, price: 50000, cashbackRate: 0.03, bg: "from-green-500/20 to-emerald-500/20", color: "text-green-400" },
-    { id: 8, name: "Running Shoes", icon: Shirt, price: 6000, cashbackRate: 0.08, bg: "from-orange-500/20 to-red-500/20", color: "text-orange-400" },
-    { id: 9, name: "4K Camera", icon: Smartphone, price: 85000, cashbackRate: 0.02, bg: "from-blue-600/20 to-indigo-600/20", color: "text-blue-500" },
-    { id: 10, name: "Wireless Earbuds", icon: Headphones, price: 3500, cashbackRate: 0.12, bg: "from-pink-500/20 to-rose-500/20", color: "text-pink-400" },
 ];
 
 interface CartItem {
@@ -186,13 +180,18 @@ export default function ShopToEarn() {
                                             exit={{ opacity: 0, x: -50 }}
                                             style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column' }}
                                         >
-                                            {/* Scrollable Store List */}
                                             <div
                                                 ref={storeScrollRef}
-                                                onWheel={handleWheelScroll}
-                                                style={{ flex: '1 1 0%', minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}
-                                                className="custom-scrollbar p-3"
+                                                style={{ flex: '1 1 0%', minHeight: 0 }}
+                                                className="p-3"
                                             >
+                                                {/* Instructional Text */}
+                                                <div className="mb-4 mt-1 text-center">
+                                                    <span className="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[11px] font-bold px-3 py-1.5 rounded-full animate-pulse">
+                                                        👇 Tap "+ Add" on any item
+                                                    </span>
+                                                </div>
+
                                                 <div className="flex flex-col gap-3 pb-6">
                                                     {storeItems.map((item, idx) => (
                                                         <div key={item.id} className="group relative glass-panel rounded-2xl p-3 border border-white/5 hover:border-white/20 transition-all flex items-center justify-between gap-2 bg-white/[0.02]">
@@ -258,7 +257,7 @@ export default function ShopToEarn() {
                                                         <button
                                                             onClick={handleCheckout}
                                                             disabled={isGeneratingBill}
-                                                            className={`w-full py-3 mt-1 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all duration-300 ${isGeneratingBill
+                                                            className={`w-full py-3 mt-1 rounded-xl text-sm font-bold flex flex-col items-center justify-center gap-0.5 transition-all duration-300 ${isGeneratingBill
                                                                 ? "bg-white/5 text-white/30 cursor-not-allowed"
                                                                 : "bg-white text-black hover:opacity-90 shadow-[0_4px_15px_rgba(255,255,255,0.2)]"
                                                                 }`}
@@ -273,7 +272,10 @@ export default function ShopToEarn() {
                                                                     Printing Bill...
                                                                 </div>
                                                             ) : (
-                                                                <>Checkout & Reveal ₹</>
+                                                                <>
+                                                                    <span className="flex items-center gap-1.5 leading-none mt-0.5">Checkout & Reveal ₹</span>
+                                                                    <span className="text-[9px] font-medium text-black/60 leading-none">Click here to proceed 👉</span>
+                                                                </>
                                                             )}
                                                         </button>
                                                     </motion.div>
