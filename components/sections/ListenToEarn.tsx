@@ -143,10 +143,15 @@ export default function ListenToEarn() {
     useEffect(() => {
         if (playerReady && playerRef.current && playerRef.current.getPlayerState) {
             const state = playerRef.current.getPlayerState();
+            // 1 = PLAYING, 2 = PAUSED, 3 = BUFFERING
             if (isPlaying) {
-                if (state !== 1) playerRef.current.playVideo();
+                if (state !== 1 && state !== 3) {
+                    playerRef.current.playVideo();
+                }
             } else {
-                if (state === 1) playerRef.current.pauseVideo();
+                if (state === 1 || state === 3) {
+                    playerRef.current.pauseVideo();
+                }
             }
         }
     }, [isPlaying, playerReady]);
@@ -176,7 +181,19 @@ export default function ListenToEarn() {
     };
 
     const togglePlay = () => {
-        setIsPlaying(!isPlaying);
+        // Optimistically set playing state, let the effect hand it to YouTube API
+        if (playerReady && playerRef.current && playerRef.current.getPlayerState) {
+            const state = playerRef.current.getPlayerState();
+            if (state === 1 || state === 3) {
+                playerRef.current.pauseVideo();
+                setIsPlaying(false);
+            } else {
+                playerRef.current.playVideo();
+                setIsPlaying(true);
+            }
+        } else {
+            setIsPlaying(!isPlaying);
+        }
     }
 
     // Calculate progress percentage
