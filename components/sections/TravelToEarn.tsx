@@ -246,13 +246,13 @@ export default function TravelToEarn() {
                                                     </h3>
                                                     <div className="flex justify-between items-end mb-3 pb-3 border-b border-white/5">
                                                         <p className="text-[10px] text-white/50 uppercase tracking-widest leading-none">Total Price</p>
-                                                        <p className="text-xl font-bold text-white leading-none">XXXX₹</p>
+                                                        <p className="text-xl font-bold text-white leading-none">₹{activeMode.price.toLocaleString()}</p>
                                                     </div>
 
                                                     <div className="bg-gradient-to-r from-yellow-500/10 to-amber-500/5 border border-yellow-500/20 rounded-lg p-2.5 flex justify-between items-center">
                                                         <p className="text-[9px] font-bold text-yellow-500/80 uppercase tracking-wider leading-none">Earn Cashback</p>
                                                         <p className="text-base font-black text-yellow-400 flex items-center gap-1 leading-none">
-                                                            +XXXX₹
+                                                            +₹{activeMode.cashback}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -355,12 +355,12 @@ export default function TravelToEarn() {
                                                     <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center bg-gray-50 rounded-lg p-3">
                                                         <div>
                                                             <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-0.5">Paid Amount</p>
-                                                            <p className="text-lg font-black text-gray-900">XXXX₹</p>
+                                                            <p className="text-lg font-black text-gray-900">₹{ticketData.price.toLocaleString()}</p>
                                                         </div>
                                                         <div className="text-right">
                                                             <p className="text-[10px] text-yellow-600 uppercase tracking-widest font-bold mb-0.5">Cashback Earned</p>
                                                             <p className="text-base font-black text-yellow-500 bg-yellow-100 px-2 rounded">
-                                                                +XXXX₹
+                                                                +₹{ticketData.cashback}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -370,7 +370,7 @@ export default function TravelToEarn() {
                                             {/* Barcode Mock */}
                                             <div className="bg-gray-100 p-4 flex flex-col items-center justify-center border-t border-gray-200">
                                                 <div className="w-full max-w-[200px] h-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJz48cGF0aCBkPSdNMCAwaDR2MTAwSDB6bTYgMGgydjEwMEg2em00IDBoNHYxMDBIMTB6bTYgMGgydjEwMEgxNnptNCAwaDN2MTAwSDIwem01IDBoMnYxMDBIMjV6bTMgMGg0djEwMEgyOHptNiAwaDJ2MTAwSDM0em00IDBoNHYxMDBIMzh6bTYgMGgydjEwMEg0NHptNCAwaDN2MTAwSDQ4em01IDBoMnYxMDBINTN6bTMgMGg0djEwMEg1NnptNiAwaDJ2MTAwSDYyem00IDBoNHYxMDBINjZ6bTYgMGgydjEwMEg3MnptNCAwaDN2MTAwSDc2em01IDBoMnYxMDBIODE6Jz48L3BhdGg+PC9zdmc+')] bg-repeat-x opacity-60 mix-blend-multiply" />
-                                                <p className="text-[8px] tracking-[0.3em] text-gray-400 mt-2">GSAA-TRVL-{Math.floor(Math.random() * 900000) + 100000}</p>
+                                                <p className="text-[8px] tracking-[0.3em] text-gray-400 mt-2">GSAA-TRVL-843924</p>
                                             </div>
                                         </div>
 

@@ -6,7 +6,7 @@ import PlayToEarn from "@/components/sections/PlayToEarn";
 import Minting from "@/components/sections/Minting";
 import ShopToEarn from "@/components/sections/ShopToEarn";
 import TravelToEarn from "@/components/sections/TravelToEarn";
-import MediaSection from "@/components/sections/MediaSection";
+// import MediaSection from "@/components/sections/MediaSection"; // hidden
 import GKTSection from "@/components/sections/GKTSection";
 import AuditionSection from "@/components/sections/AuditionSection";
 import FinalCTA from "@/components/sections/FinalCTA";
@@ -22,7 +22,7 @@ export default function Home() {
       <Minting />
       <ShopToEarn />
       <TravelToEarn />
-      <MediaSection />
+      {/* <MediaSection /> */}
       <GKTSection />
       <AuditionSection />
       <FinalCTA />

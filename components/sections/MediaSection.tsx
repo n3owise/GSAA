@@ -6,9 +6,9 @@ import { Play, Music, Film, Disc } from "lucide-react";
 import Link from "next/link";
 
 const songs = [
-    { title: "Peene de sharab", artist: "GSAA", duration: "3:45" },
-    { title: "Aaj Phir De Zara Sharab", artist: "GSAA", duration: "4:12" },
-    { title: "Mohabbat nazar humko aane lagi hai", artist: "GSAA", duration: "3:58" },
+    { title: "Midnight City", artist: "M83", duration: "4:03" },
+    { title: "Starboy", artist: "The Weeknd", duration: "3:50" },
+    { title: "Nightcall", artist: "Kavinsky", duration: "4:18" },
 ];
 
 export default function MediaSection() {
@@ -66,9 +66,9 @@ export default function MediaSection() {
                                 </div>
                             </div>
 
-                            <div className="absolute bottom-4 left-4 z-10">
+                            <div className="absolute bottom-4 left-4">
                                 <p className="text-xs font-bold text-white/60 uppercase tracking-widest mb-1">Featured Movie</p>
-                                <h3 className="text-xl font-bold text-white drop-shadow-md">Dahej Ka Chakraviyu</h3>
+                                <h3 className="text-xl font-bold text-white">Dahej Ka Chakravyu</h3>
                             </div>
                         </Link>
                     </motion.div>

@@ -151,8 +151,8 @@ export default function WatchToEarn() {
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ delay: 0.2 }}
                                     >
-                                        <h3 className="text-white text-2xl font-bold tracking-tight text-center px-4">
-
+                                        <h3 className="text-white text-2xl font-bold tracking-tight">
+                                            Click to Play & Start Earning
                                         </h3>
                                         <p className="text-white/80 text-sm font-medium">
                                             Watch videos and earn rewards instantly
