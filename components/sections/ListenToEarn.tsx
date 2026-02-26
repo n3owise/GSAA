@@ -237,14 +237,28 @@ export default function ListenToEarn() {
 
                         {/* Album Art area with sprouting coins */}
                         <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/10 group mt-2 transition-all duration-700">
-                            {/* Dynamic Album Art Base */}
+                            {/* Dynamic Album Art Base (Fallback) */}
                             <div className={`absolute inset-0 bg-gradient-to-br ${track.artGradient} transition-colors duration-1000`} />
+
+                            {/* YouTube Thumbnail */}
+                            {track.youtubeId && (
+                                <img
+                                    src={`https://img.youtube.com/vi/${track.youtubeId}/hqdefault.jpg`}
+                                    alt={track.title}
+                                    className="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-1000"
+                                    referrerPolicy="no-referrer"
+                                />
+                            )}
+
+                            {/* Dark Overlay for better contrast */}
+                            <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
+
                             {/* Overlay lighting */}
                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.4),_transparent_50%)]" />
 
                             {/* Spinning Vinyl */}
-                            <div className="absolute inset-0 flex items-center justify-center mix-blend-overlay opacity-40">
-                                <Disc size={160} className={isPlaying ? "animate-spin [animation-duration:10s]" : ""} />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <Disc size={160} className={`text-white/60 drop-shadow-xl ${isPlaying ? "animate-spin [animation-duration:10s]" : ""}`} />
                             </div>
 
                             {/* Spawning Coins Animation */}
