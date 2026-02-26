@@ -8,22 +8,16 @@ import { Play, Disc, Wallet, IndianRupee, SkipBack, SkipForward, Pause } from "l
 // The playlist data
 const TRACKS = [
     {
-        title: "Peene de sharab",
-        artist: "GSAA",
-        audioSrc: "https://res.cloudinary.com/dgybminsu/video/upload/v1772026302/Peene_De_Sharab_fdf3en.mp3",
-        artGradient: "from-red-600 via-orange-500 to-yellow-600",
-    },
-    {
         title: "Aaj Phir De Zara Sharab",
         artist: "GSAA",
-        audioSrc: "https://res.cloudinary.com/dgybminsu/video/upload/v1772026302/Aaj_Phir_De_Zara_Sharab_jcgksb.mp3",
+        youtubeId: "SSMYReBw3X0",
         artGradient: "from-indigo-600 via-purple-600 to-pink-500",
     },
     {
-        title: "Mohabbat nazar humko aane lagi hai",
+        title: "Peene de sharab",
         artist: "GSAA",
-        audioSrc: "https://res.cloudinary.com/dgybminsu/video/upload/v1772026302/Peene_De_Sharab_fdf3en.mp3", // Duplicated audio source for now to avoid breaking the player
-        artGradient: "from-emerald-600 via-teal-500 to-cyan-600",
+        youtubeId: "rcqCEqMTzd0",
+        artGradient: "from-red-600 via-orange-500 to-yellow-600",
     }
 ];
 
@@ -43,7 +37,9 @@ export default function ListenToEarn() {
     const [elapsedTime, setElapsedTime] = useState(0); // in seconds
     const [duration, setDuration] = useState(0);
 
-    const audioRef = useRef<HTMLAudioElement>(null);
+    const playerRef = useRef<any>(null);
+    const [playerReady, setPlayerReady] = useState(false);
+
     const track = TRACKS[currentTrackIndex];
 
     // Handle Wallet Earnings & Playback Synchronization
@@ -62,19 +58,112 @@ export default function ListenToEarn() {
         };
     }, [isPlaying]);
 
-    // Handle play/pause commands based on isPlaying state
+    // Initialize YouTube iframe API
     useEffect(() => {
-        if (audioRef.current) {
+        if (!(window as any).YT) {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+        }
+
+        const initPlayer = () => {
+            setTimeout(() => {
+                if ((window as any).YT && (window as any).YT.Player && !playerRef.current) {
+                    playerRef.current = new (window as any).YT.Player('youtube-audio-player', {
+                        height: '0',
+                        width: '0',
+                        videoId: TRACKS[currentTrackIndex].youtubeId,
+                        playerVars: {
+                            autoplay: 0,
+                            controls: 0,
+                            disablekb: 1,
+                            fs: 0,
+                            rel: 0,
+                            modestbranding: 1
+                        },
+                        events: {
+                            onReady: () => {
+                                setPlayerReady(true);
+                                setDuration(playerRef.current.getDuration() || 0);
+                            },
+                            onStateChange: (event: any) => {
+                                if (event.data === 1) { // PLAYING
+                                    setIsPlaying(true);
+                                } else if (event.data === 0) { // ENDED
+                                    handleNext();
+                                }
+                            }
+                        }
+                    });
+                }
+            }, 500);
+        };
+
+        if ((window as any).YT && (window as any).YT.Player) {
+            initPlayer();
+        } else {
+            const checkYT = setInterval(() => {
+                if ((window as any).YT && (window as any).YT.Player) {
+                    clearInterval(checkYT);
+                    initPlayer();
+                }
+            }, 100);
+
+            const oldCallback = (window as any).onYouTubeIframeAPIReady;
+            (window as any).onYouTubeIframeAPIReady = () => {
+                if (oldCallback) oldCallback();
+                initPlayer();
+            };
+        }
+
+        return () => {
+            if (playerRef.current && playerRef.current.destroy) {
+                playerRef.current.destroy();
+                playerRef.current = null;
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Handle Track Change
+    useEffect(() => {
+        if (playerReady && playerRef.current && playerRef.current.loadVideoById) {
             if (isPlaying) {
-                audioRef.current.play().catch(e => {
-                    console.error("Playback failed (possibly due to browser autoplay policies)", e);
-                    setIsPlaying(false);
-                });
+                playerRef.current.loadVideoById(TRACKS[currentTrackIndex].youtubeId);
             } else {
-                audioRef.current.pause();
+                playerRef.current.cueVideoById(TRACKS[currentTrackIndex].youtubeId);
+                setElapsedTime(0);
             }
         }
-    }, [isPlaying, currentTrackIndex]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentTrackIndex, playerReady]);
+
+    // Handle Play/Pause commands
+    useEffect(() => {
+        if (playerReady && playerRef.current && playerRef.current.getPlayerState) {
+            const state = playerRef.current.getPlayerState();
+            if (isPlaying) {
+                if (state !== 1) playerRef.current.playVideo();
+            } else {
+                if (state === 1) playerRef.current.pauseVideo();
+            }
+        }
+    }, [isPlaying, playerReady]);
+
+    // Track Time Progress
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (isPlaying && playerReady) {
+            interval = setInterval(() => {
+                if (playerRef.current && playerRef.current.getCurrentTime) {
+                    setElapsedTime(playerRef.current.getCurrentTime());
+                    setDuration(playerRef.current.getDuration() || 0);
+                }
+            }, 500);
+        }
+        return () => clearInterval(interval);
+    }, [isPlaying, playerReady]);
 
     const handleNext = () => {
         setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length);
@@ -84,22 +173,6 @@ export default function ListenToEarn() {
     const handlePrev = () => {
         setCurrentTrackIndex((prev) => (prev - 1 + TRACKS.length) % TRACKS.length);
         setIsPlaying(true);
-    };
-
-    const handleTimeUpdate = () => {
-        if (audioRef.current) {
-            setElapsedTime(audioRef.current.currentTime);
-        }
-    };
-
-    const handleLoadedMetadata = () => {
-        if (audioRef.current) {
-            setDuration(audioRef.current.duration);
-        }
-    };
-
-    const handleAudioEnded = () => {
-        handleNext(); // Auto skip to next track
     };
 
     const togglePlay = () => {
@@ -142,15 +215,8 @@ export default function ListenToEarn() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        {/* Hidden Audio Element */}
-                        <audio
-                            ref={audioRef}
-                            src={track.audioSrc}
-                            onTimeUpdate={handleTimeUpdate}
-                            onLoadedMetadata={handleLoadedMetadata}
-                            onEnded={handleAudioEnded}
-                            onError={(e) => console.log("Audio failed to load:", e)}
-                        />
+                        {/* Hidden YouTube Player */}
+                        <div id="youtube-audio-player" className="hidden" />
 
                         {/* Top Bar - Wallet */}
                         <div className="flex justify-between items-center w-full relative z-30">
