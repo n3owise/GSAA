@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionContent from "@/components/ui/SectionContent";
 import { Play, Disc, Wallet, IndianRupee, SkipBack, SkipForward, Pause } from "lucide-react";
+import ReactPlayer from 'react-player';
 
 // The playlist data
 const TRACKS = [
@@ -31,6 +32,7 @@ const formatTime = (seconds: number) => {
 
 export default function ListenToEarn() {
     const [walletAmount, setWalletAmount] = useState(12);
+    const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const track = TRACKS[currentTrackIndex];
 
@@ -45,10 +47,16 @@ export default function ListenToEarn() {
 
     const handleNext = () => {
         setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length);
+        setIsPlaying(true);
     };
 
     const handlePrev = () => {
         setCurrentTrackIndex((prev) => (prev - 1 + TRACKS.length) % TRACKS.length);
+        setIsPlaying(true);
+    };
+
+    const togglePlay = () => {
+        setIsPlaying(!isPlaying);
     };
 
     return (
@@ -84,18 +92,35 @@ export default function ListenToEarn() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        {/* Visible YouTube Player */}
-                        <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl border border-white/10 mt-2">
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src={`https://www.youtube.com/embed/${track.youtubeId}?autoplay=0&rel=0&modestbranding=1`}
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                className="absolute top-0 left-0 w-full h-full"
-                            ></iframe>
+                        {/* Visible YouTube Player with Pointer-Events Blocked to maintain custom cursor */}
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl border border-white/10 mt-2 bg-black">
+
+                            {/* Interactive Overlay - Captures mouse for smooth cursor and handles clicks */}
+                            <div
+                                className="absolute inset-0 z-20 cursor-none flex items-center justify-center group bg-black/10 hover:bg-black/20 transition-colors"
+                                onClick={togglePlay}
+                            >
+                                <div className={`w-16 h-16 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 ${!isPlaying ? 'opacity-100 scale-100' : 'opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100'}`}>
+                                    {isPlaying ? <Pause size={28} fill="currentColor" /> : <Play size={28} className="translate-x-1" fill="currentColor" />}
+                                </div>
+                            </div>
+
+                            {/* Target Player Frame */}
+                            <div className="absolute inset-0 w-full h-full pointer-events-none z-10">
+                                <ReactPlayer
+                                    url={`https://www.youtube.com/watch?v=${track.youtubeId}`}
+                                    playing={isPlaying}
+                                    width="100%"
+                                    height="100%"
+                                    controls={false}
+                                    onEnded={handleNext}
+                                    config={{
+                                        youtube: {
+                                            playerVars: { modestbranding: 1, rel: 0, disablekb: 1 }
+                                        } as any
+                                    }}
+                                />
+                            </div>
                         </div>
 
                         {/* Song Details */}

@@ -152,7 +152,7 @@ export default function WatchToEarn() {
                                         transition={{ delay: 0.2 }}
                                     >
                                         <h3 className="text-white text-2xl font-bold tracking-tight text-center px-4">
-                                            Dahej Ka Chakraviyu
+
                                         </h3>
                                         <p className="text-white/80 text-sm font-medium">
                                             Watch videos and earn rewards instantly
