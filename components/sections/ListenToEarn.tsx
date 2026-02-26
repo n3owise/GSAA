@@ -71,8 +71,8 @@ export default function ListenToEarn() {
             setTimeout(() => {
                 if ((window as any).YT && (window as any).YT.Player && !playerRef.current) {
                     playerRef.current = new (window as any).YT.Player('youtube-audio-player', {
-                        height: '0',
-                        width: '0',
+                        height: '10',
+                        width: '10',
                         videoId: TRACKS[currentTrackIndex].youtubeId,
                         playerVars: {
                             autoplay: 0,
@@ -232,8 +232,10 @@ export default function ListenToEarn() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        {/* Hidden YouTube Player */}
-                        <div id="youtube-audio-player" className="hidden" />
+                        {/* Hidden YouTube Player (Must be in DOM and non-zero size for API to work) */}
+                        <div className="absolute top-0 left-0 w-0 h-0 overflow-hidden opacity-0 pointer-events-none z-0">
+                            <div id="youtube-audio-player" />
+                        </div>
 
                         {/* Top Bar - Wallet */}
                         <div className="flex justify-between items-center w-full relative z-30">
