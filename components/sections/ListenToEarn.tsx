@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -107,19 +108,19 @@ export default function ListenToEarn() {
 
                             {/* Target Player Frame */}
                             <div className="absolute inset-0 w-full h-full pointer-events-none z-10">
-                                <ReactPlayer
-                                    url={`https://www.youtube.com/watch?v=${track.youtubeId}`}
-                                    playing={isPlaying}
-                                    width="100%"
-                                    height="100%"
-                                    controls={false}
-                                    onEnded={handleNext}
-                                    config={{
+                                {React.createElement(ReactPlayer as any, {
+                                    url: `https://www.youtube.com/watch?v=${track.youtubeId}`,
+                                    playing: isPlaying,
+                                    width: "100%",
+                                    height: "100%",
+                                    controls: false,
+                                    onEnded: handleNext,
+                                    config: {
                                         youtube: {
                                             playerVars: { modestbranding: 1, rel: 0, disablekb: 1 }
-                                        } as any
-                                    }}
-                                />
+                                        }
+                                    }
+                                })}
                             </div>
                         </div>
 
