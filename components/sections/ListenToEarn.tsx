@@ -31,173 +31,25 @@ const formatTime = (seconds: number) => {
 
 export default function ListenToEarn() {
     const [walletAmount, setWalletAmount] = useState(12);
-    const [isPlaying, setIsPlaying] = useState(false); // Start paused
-
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-    const [elapsedTime, setElapsedTime] = useState(0); // in seconds
-    const [duration, setDuration] = useState(0);
-
-    const playerRef = useRef<any>(null);
-    const [playerReady, setPlayerReady] = useState(false);
-
     const track = TRACKS[currentTrackIndex];
 
-    // Handle Wallet Earnings & Playback Synchronization
+    // Handle Wallet Earnings (Simplified to just run while component is mounted)
     useEffect(() => {
-        // Wallet earning tick (runs exactly every 3 seconds)
-        // Drops +₹1 into the wallet
-        let walletInterval: NodeJS.Timeout;
-        if (isPlaying) {
-            walletInterval = setInterval(() => {
-                setWalletAmount((prev) => prev >= 500 ? 5 : prev + 1);
-            }, 3000);
-        }
+        const walletInterval = setInterval(() => {
+            setWalletAmount((prev) => prev >= 500 ? 5 : prev + 1);
+        }, 3000);
 
-        return () => {
-            if (walletInterval) clearInterval(walletInterval);
-        };
-    }, [isPlaying]);
-
-    // Initialize YouTube iframe API
-    useEffect(() => {
-        if (!(window as any).YT) {
-            const tag = document.createElement('script');
-            tag.src = 'https://www.youtube.com/iframe_api';
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-        }
-
-        const initPlayer = () => {
-            setTimeout(() => {
-                if ((window as any).YT && (window as any).YT.Player && !playerRef.current) {
-                    playerRef.current = new (window as any).YT.Player('youtube-audio-player', {
-                        height: '10',
-                        width: '10',
-                        videoId: TRACKS[currentTrackIndex].youtubeId,
-                        playerVars: {
-                            autoplay: 0,
-                            controls: 0,
-                            disablekb: 1,
-                            fs: 0,
-                            rel: 0,
-                            modestbranding: 1
-                        },
-                        events: {
-                            onReady: () => {
-                                setPlayerReady(true);
-                                setDuration(playerRef.current.getDuration() || 0);
-                            },
-                            onStateChange: (event: any) => {
-                                if (event.data === 1) { // PLAYING
-                                    setIsPlaying(true);
-                                } else if (event.data === 0) { // ENDED
-                                    handleNext();
-                                }
-                            }
-                        }
-                    });
-                }
-            }, 500);
-        };
-
-        if ((window as any).YT && (window as any).YT.Player) {
-            initPlayer();
-        } else {
-            const checkYT = setInterval(() => {
-                if ((window as any).YT && (window as any).YT.Player) {
-                    clearInterval(checkYT);
-                    initPlayer();
-                }
-            }, 100);
-
-            const oldCallback = (window as any).onYouTubeIframeAPIReady;
-            (window as any).onYouTubeIframeAPIReady = () => {
-                if (oldCallback) oldCallback();
-                initPlayer();
-            };
-        }
-
-        return () => {
-            if (playerRef.current && playerRef.current.destroy) {
-                playerRef.current.destroy();
-                playerRef.current = null;
-            }
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        return () => clearInterval(walletInterval);
     }, []);
-
-    // Handle Track Change
-    useEffect(() => {
-        if (playerReady && playerRef.current && playerRef.current.loadVideoById) {
-            if (isPlaying) {
-                playerRef.current.loadVideoById(TRACKS[currentTrackIndex].youtubeId);
-            } else {
-                playerRef.current.cueVideoById(TRACKS[currentTrackIndex].youtubeId);
-                setElapsedTime(0);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentTrackIndex, playerReady]);
-
-    // Handle Play/Pause commands
-    useEffect(() => {
-        if (playerReady && playerRef.current && playerRef.current.getPlayerState) {
-            const state = playerRef.current.getPlayerState();
-            // 1 = PLAYING, 2 = PAUSED, 3 = BUFFERING
-            if (isPlaying) {
-                if (state !== 1 && state !== 3) {
-                    playerRef.current.playVideo();
-                }
-            } else {
-                if (state === 1 || state === 3) {
-                    playerRef.current.pauseVideo();
-                }
-            }
-        }
-    }, [isPlaying, playerReady]);
-
-    // Track Time Progress
-    useEffect(() => {
-        let interval: NodeJS.Timeout;
-        if (isPlaying && playerReady) {
-            interval = setInterval(() => {
-                if (playerRef.current && playerRef.current.getCurrentTime) {
-                    setElapsedTime(playerRef.current.getCurrentTime());
-                    setDuration(playerRef.current.getDuration() || 0);
-                }
-            }, 500);
-        }
-        return () => clearInterval(interval);
-    }, [isPlaying, playerReady]);
 
     const handleNext = () => {
         setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length);
-        setIsPlaying(true);
     };
 
     const handlePrev = () => {
         setCurrentTrackIndex((prev) => (prev - 1 + TRACKS.length) % TRACKS.length);
-        setIsPlaying(true);
     };
-
-    const togglePlay = () => {
-        // Optimistically set playing state, let the effect hand it to YouTube API
-        if (playerReady && playerRef.current && playerRef.current.getPlayerState) {
-            const state = playerRef.current.getPlayerState();
-            if (state === 1 || state === 3) {
-                playerRef.current.pauseVideo();
-                setIsPlaying(false);
-            } else {
-                playerRef.current.playVideo();
-                setIsPlaying(true);
-            }
-        } else {
-            setIsPlaying(!isPlaying);
-        }
-    }
-
-    // Calculate progress percentage
-    const progressPercent = duration > 0 ? (elapsedTime / duration) * 100 : 0;
 
     return (
         <section className="relative min-h-screen py-24 flex items-center overflow-hidden bg-bg-dark">
@@ -232,130 +84,44 @@ export default function ListenToEarn() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        {/* Hidden YouTube Player (Must be in DOM and non-zero size for API to work) */}
-                        <div className="absolute top-0 left-0 w-0 h-0 overflow-hidden opacity-0 pointer-events-none z-0">
-                            <div id="youtube-audio-player" />
+                        {/* Visible YouTube Player */}
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl border border-white/10 mt-2">
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                src={`https://www.youtube.com/embed/${track.youtubeId}?autoplay=0&rel=0&modestbranding=1`}
+                                title="YouTube video player"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="absolute top-0 left-0 w-full h-full"
+                            ></iframe>
                         </div>
 
-                        {/* Top Bar - Wallet */}
-                        <div className="flex justify-between items-center w-full relative z-30">
-                            <span className="text-white/50 text-xs font-semibold tracking-wider">NOW PLAYING</span>
-                            <motion.div
-                                key={walletAmount} // This forces a re-render/re-mount animation when the amount changes!
-                                initial={{ scale: 1.2, backgroundColor: "rgba(250, 204, 21, 0.4)" }} // Flash yellow
-                                animate={{ scale: 1, backgroundColor: "rgba(0, 0, 0, 0.6)" }} // Fade back to black
-                                transition={{ duration: 0.4, ease: "easeOut" }}
-                                className="flex items-center justify-center gap-2 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-lg min-w-[70px]"
-                            >
-                                <Wallet size={14} className="text-yellow-400 shrink-0" />
-                                <span className="text-yellow-400 font-bold font-mono text-sm tracking-widest leading-none mt-0.5 w-[3ch] text-right">
-                                    {walletAmount}
-                                </span>
-                            </motion.div>
-                        </div>
-
-                        {/* Album Art area with sprouting coins */}
-                        <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/10 group mt-2 transition-all duration-700">
-                            {/* Dynamic Album Art Base (Fallback) */}
-                            <div className={`absolute inset-0 bg-gradient-to-br ${track.artGradient} transition-colors duration-1000`} />
-
-                            {/* YouTube Thumbnail */}
-                            {track.youtubeId && (
-                                <img
-                                    src={`https://img.youtube.com/vi/${track.youtubeId}/hqdefault.jpg`}
-                                    alt={track.title}
-                                    className="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-1000"
-                                    referrerPolicy="no-referrer"
-                                />
-                            )}
-
-                            {/* Dark Overlay for better contrast */}
-                            <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
-
-                            {/* Overlay lighting */}
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.4),_transparent_50%)]" />
-
-                            {/* Spinning Vinyl */}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <Disc size={160} className={`text-white/60 drop-shadow-xl ${isPlaying ? "animate-spin [animation-duration:10s]" : ""}`} />
-                            </div>
-
-                            {/* Spawning Coins Animation */}
-                            {isPlaying && (
-                                <div className="absolute inset-0 pointer-events-none">
-                                    {[
-                                        { left: "30%", delay: "0s" },
-                                        { left: "50%", delay: "1s" },
-                                        { left: "70%", delay: "2s" },
-                                    ].map((path, i) => (
-                                        <div
-                                            key={i}
-                                            style={{
-                                                left: path.left,
-                                                bottom: "15%",
-                                                animationDelay: path.delay, // staggered floating intervals
-                                            } as React.CSSProperties}
-                                            className="absolute w-8 h-8 rounded-full bg-yellow-400 border border-yellow-200 flex items-center justify-center text-black shadow-[0_0_20px_rgba(250,204,21,0.6)] animate-listen-coin opacity-0 pointer-events-none z-20"
-                                        >
-                                            <IndianRupee size={16} strokeWidth={3} />
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Song Details & Visualizer */}
-                        <div className="flex items-center justify-between mt-2">
+                        {/* Song Details */}
+                        <div className="flex items-center justify-between mt-4">
                             <div>
-                                <h3 className="text-2xl font-bold text-white mb-1 line-clamp-1">{track.title}</h3>
+                                <h3 className="text-xl font-bold text-white mb-1 line-clamp-1">{track.title}</h3>
                                 <p className="text-white/60 text-sm">{track.artist}</p>
                             </div>
-
-                            {/* Animated Equalizer */}
-                            <div className="flex items-end gap-1 h-8">
-                                <div className={`w-[5px] bg-yellow-400 rounded-t-sm origin-bottom ${isPlaying ? 'animate-eq-1' : 'scale-y-[0.3] transition-transform'}`} />
-                                <div className={`w-[5px] bg-yellow-400 rounded-t-sm origin-bottom ${isPlaying ? 'animate-eq-2' : 'scale-y-[0.3] transition-transform'}`} />
-                                <div className={`w-[5px] bg-yellow-400 rounded-t-sm origin-bottom ${isPlaying ? 'animate-eq-3' : 'scale-y-[0.3] transition-transform'}`} />
-                                <div className={`w-[5px] bg-yellow-400 rounded-t-sm origin-bottom ${isPlaying ? 'animate-eq-4' : 'scale-y-[0.3] transition-transform'}`} />
-                            </div>
                         </div>
 
-                        {/* Scrubber */}
-                        <div className="w-full mt-2 group relative">
-                            {/* Drag invisible hitbox could go here */}
-                            <div className="h-1.5 bg-white/20 rounded-full overflow-hidden mb-2 cursor-pointer transition-colors hover:bg-white/30">
-                                <div
-                                    className="h-full bg-white rounded-full relative transition-[width] duration-100 ease-linear"
-                                    style={{ width: `${progressPercent}%` }}
-                                >
-                                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)] -mr-1.5" />
-                                </div>
-                            </div>
-                            <div className="flex justify-between text-[11px] text-white/40 font-bold uppercase tracking-wider">
-                                <span>{formatTime(elapsedTime)}</span>
-                                <span>{formatTime(duration)}</span>
-                            </div>
-                        </div>
-
-                        {/* Controls */}
-                        <div className="flex items-center justify-center gap-8 text-white mt-1 mb-2">
+                        {/* Controls (Next/Prev Songs) */}
+                        <div className="flex items-center justify-center gap-12 text-white mt-4 mb-2">
                             <button
                                 onClick={handlePrev}
-                                className="text-white/60 hover:text-white transition-colors active:scale-95"
+                                className="flex flex-col items-center gap-2 text-white/50 hover:text-white transition-colors active:scale-95"
                             >
-                                <SkipBack size={28} fill="currentColor" />
+                                <SkipBack size={24} fill="currentColor" />
+                                <span className="text-[10px] font-bold tracking-widest uppercase">Prev Track</span>
                             </button>
-                            <button
-                                onClick={togglePlay}
-                                className="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.3)]"
-                            >
-                                {isPlaying ? <Pause size={28} fill="currentColor" /> : <Play size={28} fill="currentColor" className="ml-1" />}
-                            </button>
+
                             <button
                                 onClick={handleNext}
-                                className="text-white/60 hover:text-white transition-colors active:scale-95"
+                                className="flex flex-col items-center gap-2 text-white/50 hover:text-white transition-colors active:scale-95"
                             >
-                                <SkipForward size={28} fill="currentColor" />
+                                <SkipForward size={24} fill="currentColor" />
+                                <span className="text-[10px] font-bold tracking-widest uppercase">Next Track</span>
                             </button>
                         </div>
 
