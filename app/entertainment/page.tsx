@@ -121,13 +121,29 @@ function EntertainmentHero() {
 /* ─────────────────── MOVIES SECTION (FILM STRIP) ─────────────────── */
 
 function MoviesSection() {
-    // Fake Movie Data
+    const trackRef = useRef<HTMLDivElement>(null);
+    const xRef = useRef(0);
+    const rafRef = useRef<number>(0);
+
+    React.useEffect(() => {
+        const speed = 0.6; // px per frame — adjust for faster/slower
+        const tick = () => {
+            const el = trackRef.current;
+            if (el) {
+                xRef.current += speed;
+                const half = el.scrollWidth / 2;
+                if (xRef.current >= half) xRef.current = 0; // seamless reset
+                el.style.transform = `translateX(-${xRef.current}px)`;
+            }
+            rafRef.current = requestAnimationFrame(tick);
+        };
+        rafRef.current = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(rafRef.current);
+    }, []);
     const movies = [
-        { title: "Neon Horizon", genre: "Sci-Fi Thriller", duration: "1h 45m", color: "from-cyan-500 to-blue-600" },
-        { title: "Dust & Glory", genre: "Post-Apocalyptic", duration: "2h 10m", color: "from-orange-500 to-red-600" },
-        { title: "The Quantum Heist", genre: "Action", duration: "1h 55m", color: "from-purple-500 to-pink-600" },
-        { title: "Silent Echoes", genre: "Mystery", duration: "2h 05m", color: "from-emerald-500 to-teal-600" },
-        { title: "Cyber Protocol", genre: "Documentary", duration: "1h 30m", color: "from-blue-500 to-indigo-600" },
+        { title: "Dahej Ka Chakravyuh", genre: "Drama", duration: "Coming Soon", image: "/dahej ka chakravyuh.png" },
+        { title: "Talaak Ab Nahi", genre: "Social Drama", duration: "Coming Soon", image: "/talaak ab nahi.png" },
+        { title: "UP80", genre: "Action", duration: "Coming Soon", image: "/up80.png" },
     ];
 
     return (
@@ -137,8 +153,8 @@ function MoviesSection() {
             </div>
 
             {/* Scrolling Film Strip Container */}
-            <div className="relative w-full overflow-x-hidden">
-                <div className="flex gap-8 animate-film-scroll hover:[animation-play-state:paused] w-[200%] pl-6">
+            <div className="relative w-full overflow-hidden">
+                <div ref={trackRef} className="flex gap-8 will-change-transform pl-6" style={{ width: 'max-content' }}>
                     {/* Duplicate list for seamless loop */}
                     {[...movies, ...movies].map((movie, i) => (
                         <div key={i} className="relative group flex-shrink-0 w-[300px] md:w-[400px] aspect-[2/3] bg-gray-900 rounded-sm overflow-hidden border-x-8 border-black shadow-2xl">
@@ -154,22 +170,19 @@ function MoviesSection() {
                                 ))}
                             </div>
 
-                            {/* Movie Poster Placeholder */}
-                            <div className={`absolute inset-0 bg-gradient-to-br ${movie.color} opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
+                            {/* Movie Poster — real image */}
+                            <Image
+                                src={movie.image}
+                                alt={movie.title}
+                                fill
+                                className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                sizes="(max-width: 768px) 300px, 400px"
+                            />
 
-                            {/* "Cinema Mode" Content */}
-                            <div className="absolute inset-0 flex flex-col justify-end p-8 z-10 bg-gradient-to-t from-black via-black/50 to-transparent">
+                            {/* Cinema Mode Content — no button */}
+                            <div className="absolute inset-0 flex flex-col justify-end p-6 z-10 bg-gradient-to-t from-black/90 via-black/30 to-transparent">
                                 <span className="text-xs font-mono text-gray-400 mb-1">{movie.genre} // {movie.duration}</span>
-                                <h3 className="text-3xl font-bold text-white mb-4 leading-none">{movie.title.toUpperCase()}</h3>
-
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-sm flex items-center justify-center gap-2 transition-colors uppercase text-sm tracking-wide"
-                                >
-                                    <Youtube size={16} />
-                                    Watch Trailer
-                                </motion.button>
+                                <h3 className="text-2xl font-bold text-white leading-tight">{movie.title.toUpperCase()}</h3>
                             </div>
                         </div>
                     ))}
@@ -183,9 +196,9 @@ function MoviesSection() {
 
 function MusicSection() {
     const albums = [
-        { title: "Midnight Validations", artist: "The Validators", color: "bg-purple-500" },
-        { title: "Gas Fees Blues", artist: "Crypto King", color: "bg-blue-500" },
-        { title: "Mint Condition", artist: "NFT Soul", color: "bg-emerald-500" },
+        { title: "Aaj Phir De Zara Sharaab", artist: "GSAA Music", image: "/aaj phir de zara sharaab.png" },
+        { title: "Mohabbat Nazar Hamko Aane Lagi Hai", artist: "GSAA Music", image: "/Mohobbat Nazar Hamko Aane Lagi Hai.jpg" },
+        { title: "Peene De Sharab", artist: "GSAA Music", image: "/peene de sharab.jpg" },
     ];
 
     return (
@@ -193,47 +206,42 @@ function MusicSection() {
             <div className="container mx-auto px-6">
                 <SectionHeader title="STUDIO SESSIONS" subtitle="Original Soundtracks & Albums" />
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-16">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-16">
                     {albums.map((album, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.2 }}
-                            className="bg-zinc-900/50 p-8 rounded-xl border border-white/5 hover:border-white/20 transition-all group"
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.15 }}
+                            className="group flex flex-col items-center"
                         >
-                            {/* Vinyl Record Visualization */}
-                            <div className="relative w-64 h-64 mx-auto mb-8 perspective-1000">
-                                {/* Record Sleeve (Back) */}
-                                <div className={`absolute inset-0 ${album.color} opacity-20 rounded-sm transform rotate-3 scale-105 transition-transform group-hover:rotate-6 group-hover:translate-x-4`} />
-
-                                {/* Vinyl Disc */}
-                                <div className="absolute inset-0 rounded-full bg-black border border-gray-800 shadow-2xl flex items-center justify-center group-hover:animate-vinyl-spin">
-                                    {/* Grooves */}
-                                    <div className="absolute inset-2 rounded-full border border-gray-800/50" />
-                                    <div className="absolute inset-4 rounded-full border border-gray-800/50" />
-                                    <div className="absolute inset-8 rounded-full border border-gray-800/50" />
-                                    <div className="absolute inset-16 rounded-full border border-gray-800/50" />
-
-                                    {/* Label */}
-                                    <div className={`w-24 h-24 rounded-full ${album.color} flex items-center justify-center`}>
-                                        <div className="w-2 h-2 bg-black rounded-full" />
+                            {/* Album Art */}
+                            <div className="relative w-64 h-64 mb-6 shadow-2xl">
+                                {/* Slight tilt behind (sleeve effect) */}
+                                <div className="absolute inset-0 bg-white/5 rounded-sm transform rotate-3 scale-105 transition-transform duration-500 group-hover:rotate-6 group-hover:translate-x-3" />
+                                {/* Main cover */}
+                                <div className="relative w-full h-full rounded-sm overflow-hidden border border-white/10 transition-transform duration-500 group-hover:scale-[1.03]">
+                                    <Image
+                                        src={album.image}
+                                        alt={album.title}
+                                        fill
+                                        className="object-cover"
+                                        sizes="256px"
+                                    />
+                                    {/* Hover overlay */}
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-xl">
+                                            <Play className="w-6 h-6 fill-black text-black ml-1" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
+                            {/* Info */}
                             <div className="text-center">
-                                <h3 className="text-2xl font-bold text-white mb-1">{album.title}</h3>
-                                <p className="text-gray-500 mb-6">{album.artist}</p>
-
-                                <div className="flex justify-center gap-4">
-                                    <button className="p-3 bg-white text-black rounded-full hover:bg-amber-400 transition-colors">
-                                        <Play className="w-5 h-5 fill-current" />
-                                    </button>
-                                    <button className="p-3 border border-white/20 text-white rounded-full hover:bg-white/10 transition-colors">
-                                        <Disc className="w-5 h-5" />
-                                    </button>
-                                </div>
+                                <h3 className="text-lg font-bold text-white mb-1 leading-snug">{album.title}</h3>
+                                <p className="text-gray-500 text-sm">{album.artist}</p>
                             </div>
                         </motion.div>
                     ))}
@@ -261,8 +269,8 @@ function UpcomingSection() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     {[
-                        { title: "PROJECT: ETHER", type: "Feature Film", date: "Coming Fall 2026", image: "bg-purple-900" },
-                        { title: "SONIC FRONTIERS", type: "Album Drop", date: "Late 2026", image: "bg-indigo-900" },
+                        { title: "LOOTERI DULHAN", type: "Feature Film", date: "Coming Fall 2026", image: "bg-purple-900" },
+                        { title: "TBA", type: "Album Drop", date: "Late 2026", image: "bg-indigo-900" },
                     ].map((item, i) => (
                         <motion.div
                             key={i}
@@ -288,7 +296,7 @@ function UpcomingSection() {
                             <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
                                 <div className="flex items-center gap-2 text-amber-400">
                                     <Ticket size={20} />
-                                    <span className="text-sm font-bold">GET NOTIFIED</span>
+                                    <span className="text-sm font-bold"></span>
                                 </div>
                             </div>
                         </motion.div>

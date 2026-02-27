@@ -127,42 +127,42 @@ function RolesSection({ onSelectRole }: { onSelectRole: (role: any) => void }) {
             <div className="container mx-auto px-6">
                 <SectionHeader title="CURRENT OPENINGS" subtitle="Find your role in our upcoming productions" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 perspective-1000">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 perspective-1000">
                     {roles.map((role, i) => (
-                        <div key={i} className="group relative w-full h-[450px] [transform-style:preserve-3d] cursor-pointer">
+                        <div key={i} className="group relative w-full h-[280px] [transform-style:preserve-3d] cursor-pointer">
                             {/* Front of Card (Polaroid Style) */}
                             <div className="absolute inset-0 bg-white p-3 pb-20 shadow-2xl transition-all duration-700 [backface-visibility:hidden] group-hover:[transform:rotateY(180deg)] flex flex-col items-center justify-between rotate-1 hover:rotate-0">
                                 <div className={`w-full h-full ${role.bgColor} flex items-center justify-center relative overflow-hidden ring-4 ring-black/5`}>
                                     {/* Role Icon */}
-                                    <role.icon size={80} className="text-white/90 drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)] transform group-hover:scale-110 transition-transform duration-500" />
+                                    <role.icon size={48} className="text-white/90 drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)] transform group-hover:scale-110 transition-transform duration-500" />
 
                                     {/* Premium Texture Overlay */}
                                     <div className="absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent" />
                                     <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')" }} />
                                 </div>
                                 <div className="absolute bottom-4 left-0 right-0 text-center px-4">
-                                    <h3 className="text-3xl font-bold font-heading text-black uppercase tracking-tighter mb-1">{role.title}</h3>
-                                    <p className="text-gray-500 font-serif italic text-sm">{role.subtitle}</p>
+                                    <h3 className="text-lg font-bold font-heading text-black uppercase tracking-tighter mb-0.5">{role.title}</h3>
+                                    <p className="text-gray-500 font-serif italic text-xs">{role.subtitle}</p>
                                 </div>
                                 {/* Paper Clip Visual */}
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-12 border-4 border-gray-400 rounded-full z-20 bg-[#1a1a1a]" />
                             </div>
 
                             {/* Back of Card (Details) */}
-                            <div className="absolute inset-0 bg-yellow-500 p-8 shadow-2xl transition-all duration-700 [transform:rotateY(180deg)] [backface-visibility:hidden] group-hover:[transform:rotateY(0deg)] flex flex-col items-center justify-center text-center -rotate-1 border-4 border-white">
-                                <role.icon size={40} className="text-black mb-4 opacity-50" />
-                                <h3 className="text-2xl font-bold text-black mb-2 uppercase border-b-2 border-black pb-2">{role.title}</h3>
-                                <p className="text-black/80 font-medium mb-8 leading-relaxed text-lg italic">"{role.desc}"</p>
+                            <div className="absolute inset-0 bg-yellow-500 p-4 shadow-2xl transition-all duration-700 [transform:rotateY(180deg)] [backface-visibility:hidden] group-hover:[transform:rotateY(0deg)] flex flex-col items-center justify-center text-center -rotate-1 border-4 border-white overflow-hidden">
+                                <role.icon size={20} className="text-black mb-2 opacity-50" />
+                                <h3 className="text-sm font-bold text-black mb-1 uppercase border-b-2 border-black pb-1">{role.title}</h3>
+                                <p className="text-black/80 font-medium mb-3 leading-snug text-[11px] italic line-clamp-4">"{role.desc}"</p>
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         onSelectRole({
                                             title: role.title,
                                             icon: role.icon,
-                                            color: role.bgColor // Passing the solid bg color instead of gradient string
+                                            color: role.bgColor
                                         });
                                     }}
-                                    className="px-8 py-3 bg-black text-white font-bold uppercase text-sm hover:bg-white hover:text-black transition-colors border-2 border-black tracking-widest">
+                                    className="px-4 py-1.5 bg-black text-white font-bold uppercase text-[10px] hover:bg-white hover:text-black transition-colors border-2 border-black tracking-widest">
                                     Apply Now
                                 </button>
                             </div>
