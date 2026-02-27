@@ -91,6 +91,7 @@ export default function ListenToEarn() {
                             "Ad-free premium listening experience",
                         ]}
                         ctaText="Start Listening"
+                        ctaLink="/earnings#listen-section"
                         align="left"
                     />
                 </div>

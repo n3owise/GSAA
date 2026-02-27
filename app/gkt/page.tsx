@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Coins, Database, Zap, Globe, Lock, Cpu, Server, Activity } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
+import { Coins, Database, Zap, Globe, Lock, Server, Activity } from "lucide-react";
 
 /* ─────────────────── SHARED COMPONENTS ─────────────────── */
 
@@ -37,16 +35,7 @@ function SectionHeader({ title, subtitle }: { title: string; subtitle: string })
 function GKTHero() {
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-black pt-20">
-            {/* Cyber Grid Background */}
-            <div className="absolute inset-0 z-0"
-                style={{
-                    backgroundImage: "linear-gradient(rgba(130, 71, 229, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(130, 71, 229, 0.05) 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
-                    perspective: "1000px",
-                    transform: "rotateX(60deg) scale(2) translateY(-20%)",
-                    transformOrigin: "top"
-                }}
-            />
+
 
             <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
@@ -63,8 +52,8 @@ function GKTHero() {
                     </motion.div>
 
                     <h1 className="text-6xl md:text-8xl font-bold font-heading mb-6 leading-tight">
-                        <span className="block text-white glitch-text" data-text="UPCOMING">UPCOMING</span>
-                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-500 animate-hologram">
+                        <span className="block text-white" data-text="UPCOMING">UPCOMING</span>
+                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-500">
                             TOKEN LAUNCH
                         </span>
                     </h1>
@@ -100,17 +89,15 @@ function GKTHero() {
                         {/* Edge/Thickness (Simulated with layers or pseudo-elements - keeping simple for now) */}
                     </div>
 
-                    {/* Holographic Rings */}
+                    {/* Holographic Rings — CSS only for perf */}
                     <div className="absolute inset-0 pointer-events-none">
-                        <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        <div
                             className="absolute inset-[10%] border border-dashed border-purple-500/20 rounded-full"
+                            style={{ willChange: "transform", animation: "spin 20s linear infinite" }}
                         />
-                        <motion.div
-                            animate={{ rotate: -360 }}
-                            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        <div
                             className="absolute inset-[20%] border border-dotted border-cyan-500/20 rounded-full"
+                            style={{ willChange: "transform", animation: "spin 15s linear infinite reverse" }}
                         />
                     </div>
                 </div>
@@ -209,85 +196,72 @@ function MintingProcess() {
 
 /* ─────────────────── TOKENOMICS (DASHBOARD) ─────────────────── */
 
-function Tokenomics() {
+function ComingSoon() {
+    const pillars = [
+        { icon: Globe, label: "Ecosystem Utility", desc: "Powering the entire GSAA platform" },
+        { icon: Zap, label: "Instant Transactions", desc: "Built for speed on Polygon" },
+        { icon: Lock, label: "Secure by Design", desc: "Audited smart contract infrastructure" },
+    ];
     return (
-        <section className="py-24 bg-bg-dark border-t border-white/5 relative overflow-hidden">
-            {/* Background Radial Gradient */}
-            <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+        <section className="py-32 bg-bg-dark border-t border-white/5 relative overflow-hidden">
+            {/* Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/8 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div className="container mx-auto px-6 relative z-10 text-center max-w-3xl">
+                {/* Badge */}
+                <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="inline-flex items-center gap-2 border border-purple-500/30 bg-purple-500/10 px-5 py-2 rounded-full mb-10"
+                >
+                    <span className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+                    <span className="text-purple-300 text-xs font-mono tracking-widest uppercase">Tokenomics — Coming Soon</span>
+                </motion.div>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-6">
-                    {[
-                        { label: "Total Supply", value: "1,000,000", suffix: "M" },
-                        { label: "Network", value: "Polygon", suffix: " POS" },
-                        { label: "Type", value: "ERC-20", suffix: "" },
-                        { label: "Launch Date", value: "Q3 2026", suffix: "" },
-                    ].map((stat, i) => (
+                {/* Heading */}
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-4xl md:text-6xl font-bold font-heading mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400"
+                >
+                    Details Dropping Soon
+                </motion.h2>
+
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                    className="text-gray-400 text-lg leading-relaxed mb-16"
+                >
+                    The full GKT tokenomics — supply model, distribution plan, and utility roadmap — will be revealed closer to the token launch. Stay tuned.
+                </motion.p>
+
+                {/* Pillars */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {pillars.map((p, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="bg-white/5 border border-white/10 p-6 rounded-sm hover:border-purple-500/30 transition-colors"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 + i * 0.1 }}
+                            className="bg-white/4 border border-white/8 rounded-xl p-6 hover:border-purple-500/30 transition-colors text-left"
                         >
-                            <p className="text-gray-400 text-xs uppercase tracking-wider mb-2">{stat.label}</p>
-                            <div className="text-2xl md:text-3xl font-bold text-white font-mono break-words">
-                                {stat.value}<span className="text-purple-500 text-lg ml-1">{stat.suffix}</span>
-                            </div>
+                            <p.icon size={28} className="text-purple-400 mb-4" />
+                            <h4 className="text-white font-semibold mb-1">{p.label}</h4>
+                            <p className="text-gray-500 text-sm">{p.desc}</p>
                         </motion.div>
                     ))}
                 </div>
-
-                {/* Chart / Distribution */}
-                <div className="relative">
-                    <SectionHeader title="PLANNED DISTRIBUTION" subtitle="Projected Allocation" />
-
-                    {/* Animated Rings Background for Text */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] -z-10 opacity-20 pointer-events-none">
-                        <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                            className="w-full h-full border border-dashed border-purple-500 rounded-full"
-                        />
-                    </div>
-
-                    <p className="text-gray-400 mb-8 leading-relaxed">
-                        Our distribution model is designed for long-term sustainability.
-                        The majority of tokens will be reserved for community rewards and ecosystem development upon TGE.
-                    </p>
-
-                    <div className="space-y-6">
-                        {[
-                            { label: "Community Rewards", width: "40%", color: "bg-purple-500" },
-                            { label: "Development Fund", width: "20%", color: "bg-cyan-500" },
-                            { label: "Liquidity Pool", width: "10%", color: "bg-blue-500" },
-                            { label: "Team & Advisors (Vested)", width: "15%", color: "bg-pink-500" },
-                            { label: "Marketing", width: "15%", color: "bg-yellow-500" },
-                        ].map((item, i) => (
-                            <div key={i}>
-                                <div className="flex justify-between text-sm mb-2">
-                                    <span className="text-white font-medium">{item.label}</span>
-                                    <span className="text-gray-400">{item.width}</span>
-                                </div>
-                                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        whileInView={{ width: item.width }}
-                                        transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
-                                        className={`h-full ${item.color}`}
-                                    />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
             </div>
         </section>
     );
 }
+
 
 /* ─────────────────── MAIN PAGE COMPONENT ─────────────────── */
 
@@ -297,7 +271,7 @@ export default function GKTPage() {
             <GKTHero />
             <AboutGKT />
             <MintingProcess />
-            <Tokenomics />
+            <ComingSoon />
 
             {/* Simple Footer for now */}
             <footer className="py-12 border-t border-white/10 text-center text-gray-500 text-sm">

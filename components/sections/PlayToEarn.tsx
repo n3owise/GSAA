@@ -42,7 +42,7 @@ const ACTION_BUTTONS: ActionButton[] = [
         colorTo: "rgb(37, 99, 235)",
         size: "20px",
         borderWidth: "2px",
-        position: { 
+        position: {
             up: "3rem",
             down: "1rem",
             left: "1rem",
@@ -59,7 +59,7 @@ const ACTION_BUTTONS: ActionButton[] = [
         colorTo: "rgb(22, 163, 74)",
         size: "20px",
         borderWidth: "2px",
-        position: { 
+        position: {
             up: "3rem",
             down: "3rem",
             left: "1rem",
@@ -76,7 +76,7 @@ const ACTION_BUTTONS: ActionButton[] = [
         colorTo: "rgb(126, 34, 206)",
         size: "20px",
         borderWidth: "2px",
-        position: { 
+        position: {
             up: "1rem",
             down: "0rem",
             left: "3rem",
@@ -93,7 +93,7 @@ const ACTION_BUTTONS: ActionButton[] = [
         colorTo: "rgb(220, 38, 38)",
         size: "20px",
         borderWidth: "2px",
-        position: { 
+        position: {
             up: "1rem",
             down: "0rem",
             left: "3rem",
@@ -176,6 +176,7 @@ export default function PlayToEarn() {
                             "Unlock massive rewards by playing",
                         ]}
                         ctaText="Start Playing"
+                        ctaLink="/earnings#play-section"
                         align="left"
                     />
                 </div>
@@ -212,7 +213,7 @@ export default function PlayToEarn() {
                         </div>
 
                         {/* Tap to Play Instruction */}
-                        <motion.div 
+                        <motion.div
                             className="text-center mb-2"
                             animate={{ opacity: [0.5, 1, 0.5] }}
                             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

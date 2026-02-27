@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionContent from "@/components/ui/SectionContent";
-import { Lock, FileCheck, Wallet, Loader2, Sparkles, CheckCircle2, IndianRupee } from "lucide-react";
+import { FileCheck, Wallet, Loader2, Sparkles, CheckCircle2, IndianRupee } from "lucide-react";
 
 type MintState = 'RAW' | 'FORGING' | 'MINTED';
 
@@ -14,7 +14,7 @@ export default function Minting() {
     const [particles, setParticles] = useState<{ x: number, y: number, scale: number, delay: number }[]>([]);
 
     useEffect(() => {
-        setParticles([...Array(20)].map(() => ({
+        setParticles([...Array(6)].map(() => ({
             x: (Math.random() - 0.5) * 600,
             y: (Math.random() - 0.5) * 600,
             scale: Math.random() * 1.5,
@@ -79,6 +79,7 @@ export default function Minting() {
                             "Earn immediate wallet rewards per mint",
                         ]}
                         ctaText="Explore Marketplace"
+                        ctaLink="/gkt"
                         align="left"
                     />
                 </div>
@@ -168,9 +169,9 @@ export default function Minting() {
                                         <div className="h-3/4 bg-black/60 m-2 rounded-lg flex items-center justify-center border border-emerald-500/30 overflow-hidden relative">
                                             <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 to-transparent" />
                                             {/* GKT Logo */}
-                                            <img 
-                                                src="/gkt-logo.png" 
-                                                alt="GKT Logo" 
+                                            <img
+                                                src="/gkt-logo.png"
+                                                alt="GKT Logo"
                                                 className="w-64 h-64 object-contain relative z-10 drop-shadow-[0_0_25px_rgba(16,185,129,1)]"
                                             />
                                         </div>
@@ -189,10 +190,10 @@ export default function Minting() {
                                         initial={{ top: "-10%", opacity: 0 }}
                                         animate={{ top: "110%", opacity: [0, 1, 1, 0] }}
                                         transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-                                        className="absolute left-0 right-0 h-1bg-emerald-400 shadow-[0_0_20px_5px_rgba(16,185,129,0.6)] z-30"
+                                        className="absolute left-0 right-0 h-1 bg-emerald-400 shadow-[0_0_20px_5px_rgba(16,185,129,0.6)] z-30"
                                     />
                                     {/* Particles flying in */}
-                                    {[...Array(10)].map((_, i) => (
+                                    {[...Array(4)].map((_, i) => (
                                         <motion.div
                                             key={`p-${i}`}
                                             initial={{
@@ -249,10 +250,10 @@ export default function Minting() {
                                 onClick={handleMintClick}
                                 disabled={mintState === 'FORGING'}
                                 className={`w-full py-4 rounded-xl font-bold font-mono tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-2 ${mintState === 'RAW'
-                                        ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] cursor-pointer active:scale-[0.98]'
-                                        : mintState === 'FORGING'
-                                            ? 'bg-gray-800 text-emerald-500 cursor-not-allowed border border-emerald-900'
-                                            : 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] cursor-pointer active:scale-[0.98]'
+                                    ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] cursor-pointer active:scale-[0.98]'
+                                    : mintState === 'FORGING'
+                                        ? 'bg-gray-800 text-emerald-500 cursor-not-allowed border border-emerald-900'
+                                        : 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] cursor-pointer active:scale-[0.98]'
                                     }`}
                             >
                                 {mintState === 'RAW' && (
@@ -277,54 +278,7 @@ export default function Minting() {
                         </div>
                     </motion.div>
 
-                    {/* Ambient Background Particles */}
-                    {particles.map((p, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{
-                                opacity: 1,
-                                x: p.x,
-                                y: p.y,
-                                scale: p.scale
-                            }}
-                            whileInView={{
-                                opacity: [0, 0.5, 0],
-                                x: 0,
-                                y: 0,
-                                scale: 0.1
-                            }}
-                            viewport={{ once: true }}
-                            transition={{
-                                duration: 1.5,
-                                ease: "easeInOut",
-                                delay: p.delay
-                            }}
-                            className="absolute z-10 w-2 h-2 bg-emerald-500/40 rounded-full blur-[2px]"
-                        />
-                    ))}
-
-                    {/* Floating Icons Background */}
-                    <div className="absolute inset-0 pointer-events-none">
-                        {[Lock, FileCheck, Wallet].map((Icon, i) => (
-                            <motion.div
-                                key={`bg-icon-${i}`}
-                                animate={{
-                                    rotate: 360,
-                                    x: Math.cos(i * 2) * 20,
-                                    y: Math.sin(i * 2) * 20
-                                }}
-                                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                                className="absolute"
-                                style={{
-                                    top: `${20 + i * 30}%`,
-                                    left: i % 2 === 0 ? '-10%' : '110%',
-                                    opacity: 0.05
-                                }}
-                            >
-                                <Icon size={40} className="text-emerald-500" />
-                            </motion.div>
-                        ))}
-                    </div>
+                    {/* Ambient particles – lightweight, once-only */}
 
                 </div>
 

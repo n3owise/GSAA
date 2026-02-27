@@ -108,6 +108,7 @@ export default function TravelToEarn() {
                             "Use wallet balance for free travel & upgrades",
                         ]}
                         ctaText="Start Exploring"
+                        ctaLink="/earnings#travel-section"
                         align="left"
                     />
                 </div>

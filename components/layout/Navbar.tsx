@@ -30,7 +30,7 @@ export default function Navbar() {
         <>
             <header
                 className={cn(
-                    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 md:px-12 h-20 flex items-center justify-between",
+                    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 lg:px-12 h-20 flex items-center justify-between",
                     isScrolled
                         ? "bg-bg-dark/80 backdrop-blur-md border-b border-white/10 h-[70px]"
                         : "bg-transparent"
@@ -44,7 +44,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center gap-10">
+                <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
@@ -58,15 +58,15 @@ export default function Navbar() {
                 </nav>
 
                 {/* Desktop CTA */}
-                <div className="hidden md:block">
+                <div className="hidden lg:block">
                     <button className="px-7 py-2.5 bg-white text-black rounded-full text-sm font-semibold hover:scale-105 hover:bg-gray-200 transition-all duration-300">
                         Join Now
                     </button>
                 </div>
 
-                {/* Mobile Menu Button */}
+                {/* Mobile/Tablet Menu Button */}
                 <button
-                    className="md:hidden relative z-50 text-white"
+                    className="lg:hidden relative z-50 text-white p-1"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
                     {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -81,7 +81,7 @@ export default function Navbar() {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ type: "tween", duration: 0.4, ease: [0.68, -0.55, 0.265, 1.55] }}
-                        className="fixed inset-y-0 right-0 w-[80%] max-w-sm bg-bg-dark/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 md:hidden shadow-2xl sidebar-gradient"
+                        className="fixed inset-y-0 right-0 w-[80%] max-w-sm bg-bg-dark/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 lg:hidden shadow-2xl sidebar-gradient"
                     >
                         <nav className="flex flex-col items-center gap-8">
                             {navLinks.map((link, i) => (
@@ -121,7 +121,7 @@ export default function Navbar() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-black/50 z-30 md:hidden backdrop-blur-sm"
+                        className="fixed inset-0 bg-black/50 z-30 lg:hidden backdrop-blur-sm"
                         onClick={() => setIsMobileMenuOpen(false)}
                     />
                 )}

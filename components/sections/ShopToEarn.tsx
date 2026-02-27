@@ -455,6 +455,7 @@ export default function ShopToEarn() {
                             "Redeem rewards for future shopping",
                         ]}
                         ctaText="Start Shopping"
+                        ctaLink="/earnings#shop-section"
                         align="left"
                     />
                 </div>

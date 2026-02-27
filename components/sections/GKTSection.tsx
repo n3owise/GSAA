@@ -103,7 +103,7 @@ export default function GKTSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-5xl md:text-7xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 mb-6 tracking-tighter"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-heading text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 mb-6 tracking-tighter"
                 >
                     GSAA KOMBAT TOKEN
                 </motion.h2>

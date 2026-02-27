@@ -66,11 +66,11 @@ export default function FinalCTA() {
                 style={{ scale, opacity }}
                 className="relative z-10 max-w-4xl mx-auto px-6 text-center"
             >
-                <h2 className="text-4xl md:text-6xl font-bold font-heading text-white mb-6">
+                <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold font-heading text-white mb-6">
                     Ready to Start <span className="text-white">Earning?</span>
                 </h2>
 
-                <p className="text-xl text-text-gray mb-16 max-w-2xl mx-auto">
+                <p className="text-base sm:text-xl text-text-gray mb-12 md:mb-16 max-w-2xl mx-auto">
                     Join GSAA Global today and transform entertainment into rewards.
                 </p>
 
@@ -93,9 +93,9 @@ export default function FinalCTA() {
 
                 {/* Main CTA Button - Pure White */}
                 <div className="relative inline-block group">
-                    <button className="relative z-20 px-12 py-6 rounded-full bg-white text-black font-bold text-xl tracking-wide hover:scale-105 hover:bg-gray-100 transition-all duration-300 flex items-center gap-4">
+                    <button className="relative z-20 px-8 md:px-12 py-4 md:py-6 rounded-full bg-white text-black font-bold text-base md:text-xl tracking-wide hover:scale-105 hover:bg-gray-100 transition-all duration-300 flex items-center gap-3 md:gap-4">
                         Join GSAA Global
-                        <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+                        <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                     </button>
 
                     {/* Orbiting Elements */}

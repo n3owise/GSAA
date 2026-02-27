@@ -231,6 +231,7 @@ export default function WatchToEarn() {
                             "Unlock exclusive entertainment access",
                         ]}
                         ctaText="Start Watching"
+                        ctaLink="/earnings#watch-section"
                         align="left"
                     />
                 </div>

@@ -126,14 +126,14 @@ export default function Hero() {
             {/* Background Gradient Mesh - Monochrome */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#222222_0%,#000000_70%)] opacity-80 z-0" />
 
-            <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl mx-auto mt-20 pt-10">
+            <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl mx-auto pt-28 md:pt-32 lg:pt-36">
 
 
 
                 {/* Main Headline */}
                 <h1
                     ref={titleRef}
-                    className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold font-heading leading-tight tracking-tight opacity-0"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-bold font-heading leading-tight tracking-tight opacity-0"
                 >
                     <span className="bg-gradient-to-br from-white via-white/80 to-white/50 bg-clip-text text-transparent bg-[length:200%_200%] animate-gradient-flow">
                         GSAA GLOBAL
@@ -143,7 +143,7 @@ export default function Hero() {
                 {/* Subtitle - Typewriter */}
                 <p
                     ref={subtitleRef}
-                    className="mt-6 text-xl md:text-2xl font-body text-text-gray tracking-wide uppercase opacity-0 h-[2em]"
+                    className="mt-4 md:mt-6 text-base sm:text-lg md:text-xl lg:text-2xl font-body text-text-gray tracking-wide uppercase opacity-0 h-[2em]"
                 >
                     {displayText}{" Meets Rewards"}
                 </p>
@@ -151,13 +151,13 @@ export default function Hero() {
                 {/* CTA Button */}
                 <button
                     ref={ctaRef}
-                    className="mt-12 px-12 py-4 bg-white text-black rounded-full font-semibold text-lg hover:scale-105 hover:bg-gray-200 transition-all duration-300 opacity-0 relative z-20"
+                    className="mt-8 md:mt-12 px-8 md:px-12 py-3 md:py-4 bg-white text-black rounded-full font-semibold text-base md:text-lg hover:scale-105 hover:bg-gray-200 transition-all duration-300 opacity-0 relative z-20"
                 >
                     Explore the Future
                 </button>
 
                 {/* MagicUI Globe Below Text */}
-                <div className="relative w-[120%] max-w-[1200px] aspect-square mt-[-150px] pointer-events-none self-center z-0 left-1/2 -ml-[60%] lg:w-full lg:-ml-0 lg:left-0 lg:max-w-[800px]">
+                <div className="relative w-full max-w-[500px] sm:max-w-[700px] md:max-w-[800px] lg:max-w-[900px] aspect-square mt-[-80px] sm:mt-[-100px] md:mt-[-130px] lg:mt-[-150px] pointer-events-none self-center z-0">
                     <Globe />
                 </div>
             </div>

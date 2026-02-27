@@ -84,16 +84,31 @@ export default function SectionContent({
                 ))}
             </ul>
 
-            <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="group relative px-8 py-4 rounded-full bg-white text-black font-semibold text-lg transition-all hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] flex items-center gap-3"
-            >
-                {ctaText}
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
-            </motion.button>
+            {ctaLink ? (
+                <Link href={ctaLink}>
+                    <motion.span
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.5 }}
+                        className="group relative px-8 py-4 rounded-full bg-white text-black font-semibold text-lg transition-all hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] flex items-center gap-3 cursor-pointer w-fit"
+                    >
+                        {ctaText}
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
+                    </motion.span>
+                </Link>
+            ) : (
+                <motion.button
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                    className="group relative px-8 py-4 rounded-full bg-white text-black font-semibold text-lg transition-all hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] flex items-center gap-3"
+                >
+                    {ctaText}
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
+                </motion.button>
+            )}
         </div >
     );
 }
