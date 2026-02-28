@@ -170,18 +170,10 @@ export function SmoothCursor({
       })
     }
 
-    // Inject global style to hide cursor on ALL elements
-    const style = document.createElement("style")
-    style.id = "smooth-cursor-hide"
-    style.textContent = "*, *::before, *::after, a, button, [role='button'], input, select, textarea, label { cursor: none !important; }"
-    document.head.appendChild(style)
-
     window.addEventListener("mousemove", throttledMouseMove)
 
     return () => {
       window.removeEventListener("mousemove", throttledMouseMove)
-      const el = document.getElementById("smooth-cursor-hide")
-      if (el) el.remove()
       if (rafId) cancelAnimationFrame(rafId)
     }
   }, [cursorX, cursorY, rotation, scale])

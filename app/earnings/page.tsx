@@ -60,67 +60,79 @@ function EarningsHero() {
             <motion.div
                 initial={{ opacity: 1 }}
                 animate={{ opacity: 0 }}
-                transition={{ duration: 0.8, delay: 2.2, ease: "easeInOut" }}
+                transition={{ duration: 0.8, delay: 3.8, ease: "easeInOut" }}
                 className="fixed inset-0 z-50 flex items-center justify-center bg-[#010a04] pointer-events-none overflow-hidden"
             >
-                {/* Falling Digital Coins Background */}
-                <div className="absolute inset-0 opacity-30">
-                    {Array.from({ length: 20 }).map((_, i) => (
+                {/* Falling Digital Rupees Background */}
+                <div className="absolute inset-0 opacity-40">
+                    {Array.from({ length: 30 }).map((_, i) => (
                         <motion.div
                             key={i}
-                            initial={{ y: -100, opacity: 0, scale: Math.random() * 0.5 + 0.5 }}
-                            animate={{ y: "120vh", opacity: [0, 1, 0], rotate: 360 }}
+                            initial={{ y: -100, opacity: 0, scale: Math.random() * 0.8 + 0.4 }}
+                            animate={{ y: "120vh", opacity: [0, 1, 0], rotateX: 360, rotateY: 180 }}
                             transition={{
-                                duration: Math.random() * 2 + 1.5,
-                                delay: Math.random() * 0.5,
+                                duration: Math.random() * 2.5 + 2,
+                                delay: Math.random() * 1.5,
                                 ease: "linear",
                                 repeat: Infinity
                             }}
-                            className="absolute"
+                            className="absolute text-[#00ff87] font-bold font-mono text-3xl md:text-5xl drop-shadow-[0_0_15px_#00ff87]"
                             style={{ left: `${Math.random() * 100}%` }}
                         >
-                            <Coins className="text-[#00ff87] drop-shadow-[0_0_10px_#00ff87]" size={32} />
+                            ₹
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Central Earnings Counter */}
+                {/* Central Earnings Box */}
                 <motion.div
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    animate={{ scale: [0.5, 1.2, 1], opacity: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="relative z-10 flex flex-col items-center"
+                    initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="relative z-10 flex flex-col items-center bg-[#021a0d]/80 backdrop-blur-md p-10 rounded-2xl border border-[#00ff87]/30 shadow-[0_0_50px_rgba(0,255,135,0.1)]"
                 >
+                    {/* Status Text Sequence */}
+                    <div className="text-[#00ff87] font-mono text-xs md:text-sm tracking-widest mb-6 h-4 overflow-hidden uppercase font-semibold">
+                        <motion.div initial={{ y: 0 }} animate={{ y: -64 }} transition={{ duration: 2.5, delay: 0.5, times: [0, 0.2, 0.4, 0.6, 0.8, 1] }}>
+                            <div className="h-4 flex items-center justify-center">SECURING CONNECTION...</div>
+                            <div className="h-4 flex items-center justify-center">AUTHENTICATING WALLET...</div>
+                            <div className="h-4 flex items-center justify-center">SYNCING SMART CONTRACTS...</div>
+                            <div className="h-4 flex items-center justify-center">RECEIVING FUNDS...</div>
+                            <div className="h-4 flex items-center justify-center text-white drop-shadow-[0_0_8px_#fff]">DEPOSIT CONFIRMED</div>
+                        </motion.div>
+                    </div>
+
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
+                        transition={{ delay: 2.2 }}
                         className="text-gray-400 font-mono text-sm tracking-widest mb-2 uppercase"
                     >
                         Total Value Locked
                     </motion.div>
 
                     {/* The Ticker */}
-                    <div className="flex items-center text-6xl md:text-8xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-b from-white to-[#00ff87] drop-shadow-[0_0_30px_rgba(0,255,135,0.4)]">
+                    <div className="flex items-center text-6xl md:text-8xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-b from-white to-[#00ff87] drop-shadow-[0_0_30px_rgba(0,255,135,0.4)] relative">
                         <span className="text-[#00ff87] mr-2">₹</span>
                         <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.2 }}
-                            className="tabular-nums"
+                            initial={{ opacity: 1 }}
+                            className="tabular-nums relative"
                         >
+                            {/* Fast scrolling numbers */}
                             <motion.span
                                 animate={{ opacity: [1, 0, 1] }}
-                                transition={{ duration: 0.1, repeat: 15 }}
+                                transition={{ duration: 0.05, repeat: 50 }}
                             >
                                 0.00
                             </motion.span>
+                            {/* Final Amount */}
                             <motion.span
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                transition={{ delay: 1.5 }}
-                                className="absolute inset-0 bg-[#010a04]"
+                                transition={{ delay: 2.5 }}
+                                className="absolute inset-0 bg-[#021a0d]"
                             >
-                                84,291.50
+                                2,50,000.00
                             </motion.span>
                         </motion.div>
                     </div>
@@ -129,8 +141,8 @@ function EarningsHero() {
                     <motion.div
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1, opacity: [1, 0] }}
-                        transition={{ duration: 0.5, delay: 1.8, ease: "easeOut" }}
-                        className="w-[200%] h-1 bg-[#00ff87] mt-4 shadow-[0_0_20px_#00ff87]"
+                        transition={{ duration: 0.6, delay: 3.2, ease: "easeOut" }}
+                        className="absolute bottom-0 left-0 w-full h-1 bg-[#00ff87] shadow-[0_0_30px_2px_#00ff87] rounded-b-2xl"
                     />
                 </motion.div>
 
@@ -138,7 +150,7 @@ function EarningsHero() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: [0, 1, 0] }}
-                    transition={{ duration: 0.5, delay: 2.1 }}
+                    transition={{ duration: 0.6, delay: 3.7 }}
                     className="absolute inset-0 bg-[#00ff87] mix-blend-overlay z-50 pointer-events-none"
                 />
             </motion.div>

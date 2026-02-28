@@ -325,15 +325,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hide native cursor globally for custom cursor */
-@media (pointer: fine) {
-
-  *,
-  *::before,
-  *::after {
-    cursor: none !important;
-  }
-}
+/* Hide native cursor globally for custom cursor REMOVED */
 
 h1,
 h2,

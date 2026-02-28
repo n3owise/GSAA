@@ -34,7 +34,6 @@ export default function RootLayout({
         className={`${montserrat.variable} ${inter.variable} antialiased bg-bg-dark text-text-white`}
       >
         <LoadingScreen />
-        <SmoothCursor />
         <SmoothScroll>
           <Navbar />
           {children}
