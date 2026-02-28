@@ -39,11 +39,20 @@ export default function FinalCTA() {
     return (
         <section
             ref={containerRef}
-            className="relative py-32 flex flex-col items-center justify-center overflow-hidden bg-bg-black"
+            className="relative py-32 flex flex-col items-center justify-center overflow-hidden bg-[#050505]"
         >
-            {/* Background Gradient & Particles */}
-            {/* Background Gradient & Particles - Subdued */}
-            <div className="absolute inset-0 bg-gradient-to-b from-bg-dark to-bg-black" />
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
+
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
+
 
             {/* Particle System (Simplified CSS animation) */}
             {particles.map((p, i) => (

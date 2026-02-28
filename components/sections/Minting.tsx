@@ -286,3 +286,5 @@ export default function Minting() {
         </section>
     );
 }
+
+// Force HMR reload

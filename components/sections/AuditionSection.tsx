@@ -218,9 +218,17 @@ function RoleCard({ role, index }: { role: typeof roles[0]; index: number }) {
 /* ─── Section ─── */
 export default function AuditionSection() {
     return (
-        <section className="relative py-28 overflow-hidden bg-bg-navy">
-            {/* Spotlight Effect */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[800px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none blur-3xl" />
+        <section className="relative py-28 overflow-hidden bg-[#0a0a0a]">
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-yellow-600/10 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start relative z-10">
 

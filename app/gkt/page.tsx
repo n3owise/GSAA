@@ -34,8 +34,73 @@ function SectionHeader({ title, subtitle }: { title: string; subtitle: string })
 
 function GKTHero() {
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-black pt-20">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050505] pt-20">
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
 
+            {/* Crypto Mining Terminal Boot Animation */}
+            <motion.div
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 0, scale: 1.1 }}
+                transition={{ duration: 0.8, ease: "easeInOut", delay: 2.5 }}
+                className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black pointer-events-none"
+            >
+                {/* CRT Screen Effect */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] z-10 pointer-events-none opacity-50" />
+
+                <div className="relative z-20 w-full max-w-3xl flex flex-col items-center font-mono text-cyan-400">
+                    {/* Animated Mining Rig Graphic */}
+                    <div className="relative w-32 h-32 mb-8">
+                        <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-0 border-[4px] border-dashed border-cyan-500/50 rounded-full"
+                        />
+                        <motion.div
+                            animate={{ rotate: -360 }}
+                            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-4 border-[2px] border-purple-500/50 rounded-full"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <motion.div
+                                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                                className="w-8 h-8 bg-purple-500 rounded-sm shadow-[0_0_20px_#a855f7] transform rotate-45"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Terminal Text Sequences */}
+                    <div className="text-left w-full max-w-md h-32 overflow-hidden flex flex-col justify-end text-sm md:text-base text-cyan-500 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">
+                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>&gt; INITIALIZING GSAA MINING PROTOCOL...</motion.p>
+                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>&gt; CONNECTING TO POLYGON MAINNET [OK]</motion.p>
+                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}>&gt; SYNCING LEDGER... 100%</motion.p>
+                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>&gt; HASH RATE: 45.2 TH/s</motion.p>
+                        <motion.p
+                            initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 1] }} transition={{ delay: 1.8 }}
+                            className="text-purple-400 font-bold mt-2 text-lg"
+                        >&gt; BLOCK FOUND! EXTRACTING GKT...</motion.p>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="w-full max-w-md h-2 bg-gray-900 mt-6 rounded overflow-hidden">
+                        <motion.div
+                            initial={{ width: "0%" }}
+                            animate={{ width: "100%" }}
+                            transition={{ duration: 1.8, ease: "easeInOut", delay: 0.2 }}
+                            className="h-full bg-gradient-to-r from-cyan-500 to-purple-500 shadow-[0_0_10px_#a855f7]"
+                        />
+                    </div>
+                </div>
+            </motion.div>
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
@@ -110,7 +175,17 @@ function GKTHero() {
 
 function AboutGKT() {
     return (
-        <section className="py-24 bg-bg-dark relative overflow-hidden">
+        <section className="py-24 bg-[#0a050f] relative overflow-hidden">
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
             <SectionHeader title="THE PROTOCOL" subtitle="Launching on Polygon Network" />
 
             <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -148,8 +223,17 @@ function AboutGKT() {
 
 function MintingProcess() {
     return (
-        <section className="py-32 bg-bg-black relative">
-            <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
+        <section className="py-32 bg-[#050510] relative overflow-hidden">
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
             <SectionHeader title="FUTURE MINTING" subtitle="How It Will Work" />
 
             <div className="container mx-auto px-6 relative">

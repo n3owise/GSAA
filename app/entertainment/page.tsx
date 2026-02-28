@@ -54,8 +54,19 @@ function EntertainmentHero() {
     return (
         <section
             onMouseMove={handleMouseMove}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black pt-20"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050500] pt-20"
         >
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-yellow-600/10 rounded-full blur-[100px] pointer-events-none" />
+
             {/* Dynamic Spotlight */}
             <div
                 className="absolute inset-0 pointer-events-none opacity-40"
@@ -66,6 +77,103 @@ function EntertainmentHero() {
 
             {/* Curtain / Texture Overlay */}
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-felt.png')] opacity-30 pointer-events-none mix-blend-overlay" />
+
+            {/* Movie Clapperboard Reveal Animation */}
+            <motion.div
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 0 }}
+                transition={{ duration: 0.5, delay: 2.2 }}
+                className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050505] pointer-events-none"
+            >
+                {/* 3D Clapperboard Container */}
+                <div className="relative w-72 md:w-96 perspective-1000">
+
+                    {/* Clapperboard Top Stick (The Flapper) */}
+                    <motion.div
+                        initial={{ rotateZ: -35 }}
+                        animate={{ rotateZ: 0 }}
+                        transition={{
+                            duration: 0.6,
+                            ease: [0.85, 0, 0.15, 1], // Snappy ease-in
+                            delay: 1.2
+                        }}
+                        className="absolute top-0 left-0 w-full h-12 bg-white origin-bottom-left z-20 overflow-hidden shadow-lg border-b-[2px] border-gray-300"
+                        style={{ transformOrigin: '0% 100%' }}
+                    >
+                        {/* Diagonal Stripes on Top Stick */}
+                        <div className="absolute inset-0 bg-[repeating-linear-gradient(-45deg,black,black_20px,white_20px,white_40px)]" />
+
+                        {/* Hinge Joint Circle */}
+                        <div className="absolute left-2 bottom-1 w-4 h-4 bg-gray-400 rounded-full border-2 border-gray-600 shadow-inner z-30" />
+                    </motion.div>
+
+                    {/* Clapperboard Bottom Stick (Fixed) */}
+                    <div className="relative w-full h-12 bg-white mt-12 z-10 overflow-hidden shadow-md border-t-[2px] border-gray-400">
+                        {/* Diagonal Stripes on Bottom Stick (Opposite direction for classic look) */}
+                        <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,black,black_20px,white_20px,white_40px)]" />
+                    </div>
+
+                    {/* Clapperboard Main Body */}
+                    <motion.div
+                        initial={{ y: 50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="w-full bg-black mt-1 p-4 rounded-b-lg border-x-4 border-b-4 border-white shadow-2xl relative"
+                    >
+                        {/* Slate Details */}
+                        <div className="grid grid-cols-3 gap-2 text-white font-mono text-xs md:text-sm mb-4 border-b border-white/20 pb-2">
+                            <div className="col-span-1 border-r border-white/20">
+                                <span className="text-gray-400 block text-[10px]">PROD.</span>
+                                GSAA ORIGINALS
+                            </div>
+                            <div className="col-span-1 border-r border-white/20 pl-2">
+                                <span className="text-gray-400 block text-[10px]">ROLL</span>
+                                A-01
+                            </div>
+                            <div className="col-span-1 pl-2">
+                                <span className="text-gray-400 block text-[10px]">SCENE</span>
+                                <motion.span
+                                    animate={{ opacity: [1, 0] }}
+                                    transition={{ duration: 0.5, repeat: Infinity, repeatType: "mirror" }}
+                                    className="text-red-500 font-bold"
+                                >
+                                    99
+                                </motion.span>
+
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2 text-white font-mono text-xs md:text-sm mb-4 border-b border-white/20 pb-2">
+                            <div className="border-r border-white/20">
+                                <span className="text-gray-400 block text-[10px]">DIRECTOR</span>
+                                USER
+                            </div>
+                            <div className="pl-2">
+                                <span className="text-gray-400 block text-[10px]">CAMERA</span>
+                                RED KOMODO X
+                            </div>
+                        </div>
+
+                        <div className="flex justify-between items-end">
+                            <div className="text-white font-mono font-bold text-2xl md:text-4xl tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">
+                                ACTION
+                            </div>
+                            <div className="text-gray-500 font-mono text-[10px]">
+                                SYNC
+                            </div>
+                        </div>
+                    </motion.div>
+
+                </div>
+
+                {/* Clapper SNAP Flash */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 0.4, delay: 1.8, ease: "easeOut" }}
+                    className="absolute inset-0 bg-white z-50 pointer-events-none mix-blend-screen"
+                />
+            </motion.div>
 
             <div className="container mx-auto px-6 relative z-10 text-center">
                 <motion.div
@@ -147,8 +255,19 @@ function MoviesSection() {
     ];
 
     return (
-        <section className="py-24 bg-[#050505] relative overflow-hidden">
-            <div className="container mx-auto px-6 mb-12">
+        <section className="py-24 bg-[#0a0800] relative overflow-hidden">
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="container mx-auto px-6 mb-12 relative z-10">
                 <SectionHeader title="CINEMA" subtitle="Feature Films & Originals" align="left" />
             </div>
 
@@ -202,8 +321,19 @@ function MusicSection() {
     ];
 
     return (
-        <section className="py-32 bg-black relative">
-            <div className="container mx-auto px-6">
+        <section className="py-32 bg-[#050400] relative overflow-hidden">
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-yellow-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="container mx-auto px-6 relative z-10">
                 <SectionHeader title="STUDIO SESSIONS" subtitle="Original Soundtracks & Albums" />
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-16">
@@ -255,11 +385,19 @@ function MusicSection() {
 
 function UpcomingSection() {
     return (
-        <section className="py-32 bg-zinc-950 relative overflow-hidden">
+        <section className="py-32 bg-[#0a0500] relative overflow-hidden">
+            {/* Background Pixel/Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+                    backgroundSize: "40px 40px"
+                }}
+            />
             {/* Background spotlight */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16">
                     <div className="text-left">
                         <h2 className="text-5xl font-bold text-white mb-2 font-heading">COMING SOON</h2>

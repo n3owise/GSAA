@@ -17,7 +17,16 @@ export default function GKTSection() {
     }, []);
 
     return (
-        <section className="relative min-h-[80vh] py-24 flex items-center justify-center overflow-hidden bg-bg-dark">
+        <section className="relative min-h-[80vh] py-24 flex items-center justify-center overflow-hidden bg-[#050505]">
+            {/* Hexagon Grid Pattern - Subtle White */}
+            <div className="absolute inset-0 z-0 opacity-[0.02]"
+                style={{
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0.4' fill='%23ffffff' stroke='%23ffffff' stroke-width='1' fill='none'/%3E%3C/svg%3E\")",
+                }}
+            />
+            {/* Ambient glows */}
+            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-fuchsia-600/10 rounded-full blur-[100px] pointer-events-none" />
 
             {/* Background - Polygon Network Grid */}
             <div className="absolute inset-0 opacity-10 pointer-events-none">

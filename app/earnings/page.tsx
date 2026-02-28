@@ -56,6 +56,93 @@ function EarningsHero() {
                 }}
             />
 
+            {/* Digital Wealth Cascade Animation */}
+            <motion.div
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 0 }}
+                transition={{ duration: 0.8, delay: 2.2, ease: "easeInOut" }}
+                className="fixed inset-0 z-50 flex items-center justify-center bg-[#010a04] pointer-events-none overflow-hidden"
+            >
+                {/* Falling Digital Coins Background */}
+                <div className="absolute inset-0 opacity-30">
+                    {Array.from({ length: 20 }).map((_, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ y: -100, opacity: 0, scale: Math.random() * 0.5 + 0.5 }}
+                            animate={{ y: "120vh", opacity: [0, 1, 0], rotate: 360 }}
+                            transition={{
+                                duration: Math.random() * 2 + 1.5,
+                                delay: Math.random() * 0.5,
+                                ease: "linear",
+                                repeat: Infinity
+                            }}
+                            className="absolute"
+                            style={{ left: `${Math.random() * 100}%` }}
+                        >
+                            <Coins className="text-[#00ff87] drop-shadow-[0_0_10px_#00ff87]" size={32} />
+                        </motion.div>
+                    ))}
+                </div>
+
+                {/* Central Earnings Counter */}
+                <motion.div
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: [0.5, 1.2, 1], opacity: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="relative z-10 flex flex-col items-center"
+                >
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="text-gray-400 font-mono text-sm tracking-widest mb-2 uppercase"
+                    >
+                        Total Value Locked
+                    </motion.div>
+
+                    {/* The Ticker */}
+                    <div className="flex items-center text-6xl md:text-8xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-b from-white to-[#00ff87] drop-shadow-[0_0_30px_rgba(0,255,135,0.4)]">
+                        <span className="text-[#00ff87] mr-2">₹</span>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.2 }}
+                            className="tabular-nums"
+                        >
+                            <motion.span
+                                animate={{ opacity: [1, 0, 1] }}
+                                transition={{ duration: 0.1, repeat: 15 }}
+                            >
+                                0.00
+                            </motion.span>
+                            <motion.span
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 1.5 }}
+                                className="absolute inset-0 bg-[#010a04]"
+                            >
+                                84,291.50
+                            </motion.span>
+                        </motion.div>
+                    </div>
+
+                    {/* Laser Scan Confirm */}
+                    <motion.div
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1, opacity: [1, 0] }}
+                        transition={{ duration: 0.5, delay: 1.8, ease: "easeOut" }}
+                        className="w-[200%] h-1 bg-[#00ff87] mt-4 shadow-[0_0_20px_#00ff87]"
+                    />
+                </motion.div>
+
+                {/* Screen Flash Reveal */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 0.5, delay: 2.1 }}
+                    className="absolute inset-0 bg-[#00ff87] mix-blend-overlay z-50 pointer-events-none"
+                />
+            </motion.div>
+
             {/* Grid overlay */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.06]"
                 style={{
